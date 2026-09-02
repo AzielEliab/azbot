@@ -1,0 +1,32 @@
+---
+description: Identity and export lock for all public or distributable artifacts.
+alwaysApply: true
+---
+
+Public work identity is Aziel / GodLock.AZ / Aziel mesh only.
+
+Never place the operator's legal name or personal/home/county location on:
+
+- exported software
+- public UI
+- README
+- zip
+- Worker / Pages surface
+- distributed artifact
+
+unless the operator explicitly requests it for that specific file.
+
+Public web surfaces:
+
+- no IP allow/block UI
+- no Node Gate panel
+- no operator/dev tooling
+- no backdoor or PC-security notes
+
+Gate config stays server-side only.
+
+Court filings may use legal name only in files the operator designated as court filings.
+
+Before a public export of images, Office, PDF, or media: strip identifying embedded metadata from a **copy** (GPS, camera, author, producer). Leave originals untouched. Do not rewrite content timestamps to fake origin.
+
+Do not build an upload proxy or claim a transfer is origin-free.

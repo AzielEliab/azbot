@@ -1,3 +1,9 @@
-include LICENSE README.md SKILL.md
+include LICENSE README.md SKILL.md AGENTS.md
 graft azbot/web
 include azbot/SKILL.md
+graft standalone
+graft skills
+graft .cursor
+global-exclude __pycache__ *.py[cod] .pytest_cache
+prune standalone/out
+prune standalone/work

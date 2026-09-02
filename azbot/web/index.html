@@ -8,11 +8,11 @@
 </head>
 <body>
   <header>
-    <div class="tag">AZBot · v0.1.0 · 127.0.0.1:8870</div>
+    <div class="tag">AZBot · v0.2.0 · 127.0.0.1:8870</div>
     <h1>One skill for every Aziel Eliab engine</h1>
-    <p class="lede">Paste the OpenAPI into Grok, ChatGPT, or Venice. AZBot is a skill, not a model. Jeeves is not sovereign.</p>
+    <p class="lede">Paste the OpenAPI into Grok, ChatGPT, or Venice. AZBot is a skill, not a model. Not Grok weights. Jeeves is not sovereign.</p>
   </header>
-  <div class="banner" role="note">Not a foundation model. Not a kernel. Not a VPN. Call the catalog. Do not invent scores.</div>
+  <div class="banner" role="note">Not a foundation model. Not a kernel. Not a VPN. Not an upload proxy. Not untraceable origin. Call the catalog. Do not invent scores.</div>
   <section class="actions">
     <button type="button" id="copy-oa" class="action">Copy OpenAPI</button>
     <button type="button" id="copy-mcp" class="action">Copy MCP</button>
@@ -20,6 +20,21 @@
   </section>
   <p id="status" class="muted">No copy yet.</p>
   <p><a href="https://aziel-runtime.vibelock.workers.dev/">Open the live catalog</a></p>
+
+  <section class="card" id="skills-panel">
+    <h2>Skills</h2>
+    <p class="muted">Custom skills and Cursor SKILL.md files. Add a skill file. Export a skill file. These are local instructions, not Grok weights.</p>
+    <label class="file-label">Add skill
+      <input type="file" id="skill-file" accept=".md,.markdown,text/markdown" />
+    </label>
+    <div class="actions">
+      <button type="button" id="import-skill" class="action">Add skill</button>
+      <button type="button" id="export-skill" class="action">Export skill</button>
+    </div>
+    <ul id="skill-list" class="skill-list"></ul>
+    <p id="skill-desc" class="muted">Pick a skill to see what it does.</p>
+  </section>
+
   <pre id="skill"></pre>
   <footer>
     <p><strong>Peace → Clarity → Service.</strong></p>

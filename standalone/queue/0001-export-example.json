@@ -1,0 +1,31 @@
+{
+  "action": "export.findings",
+  "publish": false,
+  "repeat": false,
+  "payload": {
+    "name": "example-finding",
+    "rows": [
+      {
+        "t": 0,
+        "v": 1.0,
+        "note": "baseline"
+      },
+      {
+        "t": 1,
+        "v": 1.6,
+        "note": "lift"
+      },
+      {
+        "t": 2,
+        "v": 1.4,
+        "note": "settle"
+      }
+    ],
+    "points": [
+      [0, 1.0],
+      [1, 1.6],
+      [2, 1.4]
+    ]
+  },
+  "status": "draft"
+}

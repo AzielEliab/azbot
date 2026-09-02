@@ -1,7 +1,7 @@
 """AZBot: skill for Aziel Eliab public engines. Not a model."""
 from pathlib import Path
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "Aziel Eliab"
 LIMITATION = (
     "AZBot is a skill, not a foundation model, not a kernel, not a VPN, "

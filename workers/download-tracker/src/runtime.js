@@ -37,7 +37,7 @@ export async function handleRuntimeApi(request, url) {
     return json({
       ok: true,
       product: "azbot",
-      version: "0.1.0",
+      version: "0.2.0",
       runtime: true,
       kv_increment: false,
       is_skill: true,
@@ -53,7 +53,7 @@ export async function handleRuntimeApi(request, url) {
     const origin = originOf(request);
     return json({
       openapi: "3.1.0",
-      info: { title: "AZBot", version: "0.1.0", description: LIMITATION },
+      info: { title: "AZBot", version: "0.2.0", description: LIMITATION },
       paths: {
         "/v1/health": { get: { operationId: "azbot_health", summary: "Liveness. Does not increment download KV." } },
         "/v1/skill": { get: { operationId: "azbot_skill", summary: "Return AZBot skill markdown. Does not increment download KV." } },

@@ -1,0 +1,19 @@
+---
+description: Sealed systems, ARK, Slingshot — apply when touching vaults, receipts, exports, encryption.
+globs: "**/*.{ark,ark.py,sanitize.py,receipt.py}"
+alwaysApply: false
+---
+
+Slingshot Prep is local metadata sanitation on a copy plus a SHA-256 receipt. Not an anonymous drop.
+
+ARK1 envelope (if `ark.py` is in the tree):
+
+- `python3 app/ark.py seal FILE --pass PASS --out FILE.ark`
+- `python3 app/ark.py inspect FILE.ark --pass PASS`
+- `python3 app/ark.py phoenix FILE.ark --pass PASS --extract OUT`
+
+Phoenix is authorized local re-seal (gen+1). It is not a remote payload and does not run when a stranger opens the blob.
+
+Do not ARK-overwrite evidence originals that must keep byte-for-byte provenance. Seal a copy.
+
+Do not log passphrases. Do not commit `.ark` keys or passphrase files.

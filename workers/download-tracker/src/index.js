@@ -16,7 +16,7 @@ import { handleRuntimeApi } from "./runtime.js";
  */
 
 const PROJECT = "azbot";
-const DEFAULT_ASSET = "azbot-0.1.0.tar.gz";
+const DEFAULT_ASSET = "azbot-0.2.0.tar.gz";
 const DEFAULT_OWNER = "AzielEliab";
 const DEFAULT_REPO = "azbot";
 const DEFAULT_BRANCH = "main";
@@ -202,7 +202,7 @@ async function indexHtml(env) {
   <p class="motto">A skill for Grok, ChatGPT, and Venice. Not a model. Jeeves is not sovereign.</p>
   <div class="card">
     <p class="count">${n}<span> downloads of this project</span></p>
-    <a class="dl" href="/download?asset=azbot-0.1.0.tar.gz">Download azbot-0.1.0.tar.gz — ${n} counted</a>
+    <a class="dl" href="/download?asset=azbot-0.2.0.tar.gz">Download azbot-0.2.0.tar.gz — ${n} counted</a>
     <p class="meta">The count ticks on this click. Nobody reports anything. Forks using this same link are counted automatically.</p>
     <p class="iso">Isolated counter: Worker <code>azbot-download-tracker</code>, project <code>azbot</code>, KV <code>AZBOT_DOWNLOADS</code>. Not mixed with any other product. /v1 does not increment downloads.</p>
     <p class="meta"><a href="/stats">JSON stats</a> · <a href="${github}">GitHub releases</a></p>

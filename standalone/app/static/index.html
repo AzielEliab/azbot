@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AZbot Local</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { font: 15px/1.4 ui-sans-serif, system-ui, sans-serif; margin: 0; background: #0b0d10; color: #e8edf2; }
+    main { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
+    h1 { font-size: 22px; font-weight: 650; letter-spacing: .02em; margin: 0 0 8px; }
+    .sub { color: #9aa7b4; margin-bottom: 28px; }
+    .card { border: 1px solid #24303a; background: #12161b; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    label { display: block; margin-bottom: 10px; color: #c5d0d8; }
+    input[type=file], input[type=password] { width: 100%; box-sizing: border-box; background: #0b0d10; color: #e8edf2; border: 1px solid #24303a; border-radius: 8px; padding: 8px; }
+    button { background: #e8edf2; color: #0b0d10; border: 0; border-radius: 8px; padding: 10px 16px; font-weight: 650; cursor: pointer; margin-right: 8px; margin-top: 6px; }
+    button:disabled { opacity: .5; cursor: wait; }
+    pre { white-space: pre-wrap; word-break: break-word; background: #0b0d10; padding: 12px; border-radius: 8px; font-size: 12px; }
+    .warn { color: #d2b48c; }
+    ul.skill-list { list-style: none; padding: 0; margin: 10px 0; }
+    ul.skill-list li { border: 1px solid #24303a; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; cursor: pointer; }
+    ul.skill-list li.active { border-color: #e8edf2; }
+    .muted { color: #9aa7b4; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>AZbot Local 0.2.0</h1>
+    <p class="sub">Operator shell on 127.0.0.1. Does not upload. Does not hide network origin. Not Grok weights.</p>
+
+    <div class="card">
+      <p><strong>Slingshot Prep</strong> — strip identifying embedded metadata from a copy.</p>
+      <form id="prep">
+        <label>Files<input type="file" name="file" multiple required /></label>
+        <button type="submit">Prep copies</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <p><strong>ARK seal</strong> — encrypt raw file and metadata into a .ark envelope. Outer header has algorithm fields only. Name, size, hash live inside encrypted meta.</p>
+      <p class="warn">Phoenix is local authorized view. It re-seals gen+1 on this machine. It is not a remote payload and it does not make an upload untraceable.</p>
+      <form id="ark">
+        <label>File<input type="file" name="file" required /></label>
+        <label>Passphrase<input type="password" name="pass" required autocomplete="off" /></label>
+        <button type="submit" data-path="/ark/seal">Seal</button>
+        <button type="submit" data-path="/ark/phoenix">Phoenix view</button>
+      </form>
+    </div>
+
+    <div class="card" id="skills-panel">
+      <p><strong>Skills</strong> — custom skills and Cursor SKILL.md files. These are local instructions, not Grok weights.</p>
+      <label>Add skill<input type="file" id="skill-file" accept=".md,.markdown,text/markdown" /></label>
+      <button type="button" id="import-skill">Add skill</button>
+      <button type="button" id="export-skill">Export skill</button>
+      <ul id="skill-list" class="skill-list"></ul>
+      <p id="skill-desc" class="muted">Pick a skill to see what it does.</p>
+    </div>
+
+    <div class="card">
+      <div>Result</div>
+      <pre id="out">idle</pre>
+    </div>
+  </main>
+  <script>
+    async function post(path, form) {
+      const fd = new FormData(form);
+      const res = await fetch(path, { method: 'POST', body: fd });
+      return await res.text();
+    }
+    const out = document.getElementById('out');
+    const descEl = document.getElementById('skill-desc');
+    const listEl = document.getElementById('skill-list');
+    let selected = null;
+
+    document.getElementById('prep').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      out.textContent = 'working';
+      out.textContent = await post('/prep', e.target);
+    });
+    document.getElementById('ark').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const path = e.submitter && e.submitter.dataset.path || '/ark/seal';
+      out.textContent = 'working';
+      out.textContent = await post(path, e.target);
+    });
+
+    async function loadSkills() {
+      const skills = await fetch('/api/skills').then((r) => r.json());
+      listEl.innerHTML = '';
+      skills.forEach((s) => {
+        const li = document.createElement('li');
+        li.textContent = s.name;
+        li.title = s.description;
+        li.dataset.name = s.name;
+        li.onclick = () => {
+          selected = s;
+          [...listEl.children].forEach((el) => el.classList.toggle('active', el.dataset.name === s.name));
+          descEl.textContent = s.description || 'No description.';
+        };
+        listEl.appendChild(li);
+      });
+    }
+    document.getElementById('import-skill').onclick = async () => {
+      const input = document.getElementById('skill-file');
+      if (!input.files || !input.files[0]) {
+        out.textContent = 'Choose a SKILL.md file first.';
+        return;
+      }
+      const fd = new FormData();
+      fd.append('file', input.files[0], input.files[0].name);
+      const res = await fetch('/api/skills/import', { method: 'POST', body: fd });
+      out.textContent = await res.text();
+      await loadSkills();
+    };
+    document.getElementById('export-skill').onclick = () => {
+      if (!selected) {
+        out.textContent = 'Pick a skill, then Export skill.';
+        return;
+      }
+      const a = document.createElement('a');
+      a.href = '/api/skills/' + encodeURIComponent(selected.name) + '/export';
+      a.download = (selected.slug || selected.name) + '.md';
+      a.click();
+      out.textContent = 'Exported ' + selected.name;
+    };
+    loadSkills().catch((err) => { descEl.textContent = String(err); });
+  </script>
+</body>
+</html>

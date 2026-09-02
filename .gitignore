@@ -8,3 +8,8 @@ node_modules/
 workers/download-tracker/node_modules/
 workers/download-tracker/public/*.tar.gz
 .wrangler
+standalone/out/
+standalone/work/
+.env
+standalone/.env
+*.ark

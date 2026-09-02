@@ -1,0 +1,16 @@
+---
+description: Export, queue, gated publish. No password login bots.
+alwaysApply: true
+---
+
+Findings and charts export to JSONL/CSV/PNG/SVG on disk.
+
+Public posts, replies, comments:
+
+- Official APIs only.
+- Tokens from environment variables the operator sets. Never write tokens into the repo.
+- Default action is draft into `queue/`.
+- Network post requires an explicit publish flag plus `AZBOT_PUBLISH=1`.
+- Do not implement browser password login.
+- Do not scrape authenticated pages by stealing a session.
+- Do not create scheduled posts unless the operator provided the exact text and cadence.
