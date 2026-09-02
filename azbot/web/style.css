@@ -1,0 +1,15 @@
+:root { --bg:#0b0b0b; --gold:#c9a227; --ivory:#e8e0d0; --muted:#8a8070; --surface:#141414; }
+* { box-sizing: border-box; }
+html, body { margin:0; background:var(--bg); color:var(--ivory); font-family: Palatino, Georgia, serif; }
+body { max-width: 44rem; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+h1 { color: var(--gold); font-size: 1.6rem; }
+.tag { font-family: ui-monospace, monospace; font-size: .75rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+.banner { border:1px solid #5c4a1a; background:#241c0d; color:#f0d78c; padding:.75rem 1rem; border-radius:8px; margin:1rem 0; }
+.actions { display:flex; flex-wrap:wrap; gap:.5rem; margin:1rem 0; }
+button.action { appearance:none; border:1px solid var(--gold); background:var(--surface); color:var(--ivory); font:inherit; padding:.5rem .9rem; border-radius:6px; cursor:pointer; }
+button.action:hover { background: var(--gold); color: var(--bg); }
+.muted { color: var(--muted); }
+pre { white-space: pre-wrap; background: var(--surface); padding: 1rem; border-radius: 8px; font-size: .85rem; }
+a { color: var(--gold); }
+footer { margin-top: 2rem; color: var(--muted); font-size: .85rem; }
+footer strong { color: var(--gold); }
