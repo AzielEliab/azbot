@@ -1,71 +1,49 @@
 ---
 name: AZBot
-description: Use this when Grok, ChatGPT, Venice, or any assistant should call Aziel Eliab public engines via the aziel-runtime OpenAPI/MCP catalog.
+description: Use when calling AZBot hosted /v1 or installing the local package. Author Aziel Eliab.
 ---
 
 # AZBot
 
-AZBot is a **skill**. It is not a new foundation model, not a kernel, not a VPN, not a paid-key proxy, and not Jeeves-as-sovereign.
+A skill for Grok, ChatGPT, and Venice. Not a model. Jeeves is not sovereign. Author: **Aziel Eliab**.
 
-One catalog for every public Aziel Eliab engine:
+**THIS IS:** a skill plus local runner for custom and Cursor SKILL.md files.
 
-- Catalog: https://aziel-runtime.vibelock.workers.dev/
-- OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
+**THIS IS NOT:** a foundation model, Grok weights, a kernel, a VPN, or a paid-key proxy. Hosted `/v1` does not increment downloads or views.
+
+Always send `User-Agent: Mozilla/5.0`. Cloudflare Workers may 403 an empty agent.
+
+## Call these URLs
+
+- Worker OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
+- Catalog OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
 - MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`
+- Live skill (this markdown): `GET https://azbot-download-tracker.vibelock.workers.dev/v1/skill`
 
-Always send a normal `User-Agent` (for example `Mozilla/5.0`). Cloudflare Workers may 403 empty agents.
+Ops (do **not** increment downloads or views):
 
-## Rules
+- `GET /v1/health` — liveness
+- `GET /v1/skill` — this file
+- Product POSTs listed in OpenAPI
 
-1. Call the catalog. Do not invent scores, overlays, receipts, or health.
-2. Repeat the product banner. Never claim forensic proof, a lab spectrometer, a real UV lamp, OCR truth, a kernel, a VPN, legal advice, lie detection, call intercept, or hosted AZAI spending paid keys.
-3. Lamb Lens order: Peace → Clarity → Service. Jeeves is not sovereign.
-4. AZ-CLCE Type D is a **label only**, not a finding of malice.
-5. SpectralLock overlays are advisory visualization. The human still reads the page.
-6. ForgeReceipts is not legal advice.
-7. Forks are welcome and always allowed. Apache-2.0.
+Grok: import OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP tools.
 
-## How to call
+## Example
 
 ```bash
-curl -s -A 'Mozilla/5.0' https://aziel-runtime.vibelock.workers.dev/v1/health
-curl -s -A 'Mozilla/5.0' -X POST https://aziel-runtime.vibelock.workers.dev/p/azclce/score \
-  -H 'content-type: application/json' \
-  -d '{"r":"login button blue","d":"login form submits","p":"login button submits"}'
+curl -s -A 'Mozilla/5.0' https://azbot-download-tracker.vibelock.workers.dev/v1/health
+curl -s -A 'Mozilla/5.0' https://azbot-download-tracker.vibelock.workers.dev/v1/skill
 ```
-
-MCP tools are named `{slug}_{op}` (example `azclce_score`, `spectrallock_overlay`, `azai_lamb_check`).
-
-Grok: import the OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP tools.
-
-## Products (honest one-liners)
-
-| slug | name | do not claim |
-|------|------|----------------|
-| vibelock | VibeLock | courtroom audio proof |
-| veillock | VeilLock | FaceTime/Zoom intercept |
-| codelock | CodeLock | that meaning changed |
-| godlock | GodLock | a VPN or ghost net |
-| shadowlock | ShadowLock | OS hooks / process intercept |
-| temporallock | TemporalLock | legal chain of custody |
-| forgereceipts | ForgeReceipts | legal advice / court filing |
-| decisiongate | DecisionGATE | moral authority |
-| zsolver | ZionPattern Solver | a solved case; cap is 75% |
-| azos | AZ-OS | a kernel or remote shell |
-| glossafilter | Glossa Filter | that tools hold opinions |
-| miragegrid | MirageGrid | anonymity / VPN |
-| staticclock | StaticClock | a scheduler you set |
-| chronolock | ChronoLock | targeting or virality |
-| postking | Post-King Chess | that the goal is to win |
-| azclce | AZ-CLCE | intent or malice |
-| ark | The ARK | a kernel; hosted unlock |
-| azai | AZAI | a new model; hosted paid proxy |
-| spectrallock | SpectralLock | spectrometer / forensic ink |
-
 
 ## Local (after one-click install)
 
 ```bash
 curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash
 azbot ui
+azbot doctor
 ```
+
+Then open http://127.0.0.1:8870 (loopback only).
+
+Counted download (gzip HTTP 200, no 302): https://azbot-download-tracker.vibelock.workers.dev/download?asset=azbot-0.2.0.tar.gz
+GitHub: https://github.com/AzielEliab/azbot
