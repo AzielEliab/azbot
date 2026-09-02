@@ -116,6 +116,16 @@ flutter run
 
 Isolated counter: Worker `azbot-download-tracker`, project `azbot`, KV `AZBOT_DOWNLOADS`. `/download` serves gzip (`private, no-store`). No 302 to GitHub.
 
+## Cite this
+
+Aziel Eliab. AZBot. https://github.com/AzielEliab/azbot. https://azbot-download-tracker.vibelock.workers.dev.
+
+- Catalog: https://aziel-runtime.vibelock.workers.dev/
+- Worker homepage: https://azbot-download-tracker.vibelock.workers.dev/
+- Counted download (gzip HTTP 200, no 302): https://azbot-download-tracker.vibelock.workers.dev/download
+- GitHub: https://github.com/AzielEliab/azbot
+- Citation JSON: https://azbot-download-tracker.vibelock.workers.dev/cite.json
+
 ## License
 
 Apache License 2.0. Copyright 2026 Aziel Eliab.
