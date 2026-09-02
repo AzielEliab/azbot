@@ -1,4 +1,5 @@
 /** AZBot hosted runtime. Skill markdown only. /v1 never touches DOWNLOADS KV. */
+const EXAMPLE_PAYLOAD = {};
 
 const LIMITATION =
   "AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime.";
@@ -29,13 +30,13 @@ function originOf(request) {
   try { return new URL(request.url).origin; } catch { return "https://azbot-download-tracker.vibelock.workers.dev"; }
 }
 
-const SKILL = "---\nname: AZBot\ndescription: Use this when Grok, ChatGPT, Venice, or any assistant should call Aziel Eliab public engines via the aziel-runtime OpenAPI/MCP catalog.\n---\n\n# AZBot\n\nAZBot is a **skill**. It is not a new foundation model, not a kernel, not a VPN, not a paid-key proxy, and not Jeeves-as-sovereign.\n\nOne catalog for every public Aziel Eliab engine:\n\n- Catalog: https://aziel-runtime.vibelock.workers.dev/\n- OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json\n- MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`\n\nAlways send a normal `User-Agent` (for example `Mozilla/5.0`). Cloudflare Workers may 403 empty agents.\n\n## Rules\n\n1. Call the catalog. Do not invent scores, overlays, receipts, or health.\n2. Repeat the product banner. Never claim forensic proof, a lab spectrometer, a real UV lamp, OCR truth, a kernel, a VPN, legal advice, lie detection, call intercept, or hosted AZAI spending paid keys.\n3. Lamb Lens order: Peace \u2192 Clarity \u2192 Service. Jeeves is not sovereign.\n4. AZ-CLCE Type D is a **label only**, not a finding of malice.\n5. SpectralLock overlays are advisory visualization. The human still reads the page.\n6. ForgeReceipts is not legal advice.\n7. Forks are welcome and always allowed. Apache-2.0.\n\n## How to call\n\n```bash\ncurl -s -A 'Mozilla/5.0' https://aziel-runtime.vibelock.workers.dev/v1/health\ncurl -s -A 'Mozilla/5.0' -X POST https://aziel-runtime.vibelock.workers.dev/p/azclce/score \\\n  -H 'content-type: application/json' \\\n  -d '{\"r\":\"login button blue\",\"d\":\"login form submits\",\"p\":\"login button submits\"}'\n```\n\nMCP tools are named `{slug}_{op}` (example `azclce_score`, `spectrallock_overlay`, `azai_lamb_check`).\n\nGrok: import the OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP tools.\n\n## Products (honest one-liners)\n\n| slug | name | do not claim |\n|------|------|----------------|\n| vibelock | VibeLock | courtroom audio proof |\n| veillock | VeilLock | FaceTime/Zoom intercept |\n| codelock | CodeLock | that meaning changed |\n| godlock | GodLock | a VPN or ghost net |\n| shadowlock | ShadowLock | OS hooks / process intercept |\n| temporallock | TemporalLock | legal chain of custody |\n| forgereceipts | ForgeReceipts | legal advice / court filing |\n| decisiongate | DecisionGATE | moral authority |\n| zsolver | ZionPattern Solver | a solved case; cap is 75% |\n| azos | AZ-OS | a kernel or remote shell |\n| glossafilter | Glossa Filter | that tools hold opinions |\n| miragegrid | MirageGrid | anonymity / VPN |\n| staticclock | StaticClock | a scheduler you set |\n| chronolock | ChronoLock | targeting or virality |\n| postking | Post-King Chess | that the goal is to win |\n| azclce | AZ-CLCE | intent or malice |\n| ark | The ARK | a kernel; hosted unlock |\n| azai | AZAI | a new model; hosted paid proxy |\n| spectrallock | SpectralLock | spectrometer / forensic ink |\n";
+const SKILL = "---\nname: AZBot\ndescription: Use this when Grok, ChatGPT, Venice, or any assistant should call Aziel Eliab public engines via the aziel-runtime OpenAPI/MCP catalog.\n---\n\n# AZBot\n\nAZBot is a **skill**. It is not a new foundation model, not a kernel, not a VPN, not a paid-key proxy, and not Jeeves-as-sovereign.\n\nOne catalog for every public Aziel Eliab engine:\n\n- Catalog: https://aziel-runtime.vibelock.workers.dev/\n- OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json\n- MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`\n\nAlways send a normal `User-Agent` (for example `Mozilla/5.0`). Cloudflare Workers may 403 empty agents.\n\n## Rules\n\n1. Call the catalog. Do not invent scores, overlays, receipts, or health.\n2. Repeat the product banner. Never claim forensic proof, a lab spectrometer, a real UV lamp, OCR truth, a kernel, a VPN, legal advice, lie detection, call intercept, or hosted AZAI spending paid keys.\n3. Lamb Lens order: Peace \u2192 Clarity \u2192 Service. Jeeves is not sovereign.\n4. AZ-CLCE Type D is a **label only**, not a finding of malice.\n5. SpectralLock overlays are advisory visualization. The human still reads the page.\n6. ForgeReceipts is not legal advice.\n7. Forks are welcome and always allowed. Apache-2.0.\n\n## How to call\n\n```bash\ncurl -s -A 'Mozilla/5.0' https://aziel-runtime.vibelock.workers.dev/v1/health\ncurl -s -A 'Mozilla/5.0' -X POST https://aziel-runtime.vibelock.workers.dev/p/azclce/score \\\n  -H 'content-type: application/json' \\\n  -d '{\"r\":\"login button blue\",\"d\":\"login form submits\",\"p\":\"login button submits\"}'\n```\n\nMCP tools are named `{slug}_{op}` (example `azclce_score`, `spectrallock_overlay`, `azai_lamb_check`).\n\nGrok: import the OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP tools.\n\n## Products (honest one-liners)\n\n| slug | name | do not claim |\n|------|------|----------------|\n| vibelock | VibeLock | courtroom audio proof |\n| veillock | VeilLock | FaceTime/Zoom intercept |\n| codelock | CodeLock | that meaning changed |\n| godlock | GodLock | a VPN or ghost net |\n| shadowlock | ShadowLock | OS hooks / process intercept |\n| temporallock | TemporalLock | legal chain of custody |\n| forgereceipts | ForgeReceipts | legal advice / court filing |\n| decisiongate | DecisionGATE | moral authority |\n| zsolver | ZionPattern Solver | a solved case; cap is 75% |\n| azos | AZ-OS | a kernel or remote shell |\n| glossafilter | Glossa Filter | that tools hold opinions |\n| miragegrid | MirageGrid | anonymity / VPN |\n| staticclock | StaticClock | a scheduler you set |\n| chronolock | ChronoLock | targeting or virality |\n| postking | Post-King Chess | that the goal is to win |\n| azclce | AZ-CLCE | intent or malice |\n| ark | The ARK | a kernel; hosted unlock |\n| azai | AZAI | a new model; hosted paid proxy |\n| spectrallock | SpectralLock | spectrometer / forensic ink |\n\n## Catalog + local UI\n\nAuthor: **Aziel Eliab**. Honest scope: Skill, not a foundation model. Hosted /v1/skill returns markdown. Jeeves is not sovereign.\n\n- Catalog product: https://aziel-runtime.vibelock.workers.dev/p/azbot/\n- Catalog OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json\n- Catalog MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`\n- This Worker skill: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/skill`\n- This Worker OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json\n- Sample payload: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/example`\n\nLocal UI: **Import JSON file** (`type=file`) and **Export JSON**. Then `azbot doctor`.\n\nGrok: import catalog or Worker OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP tools.\n";
 
 export async function handleRuntimeApi(request, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   if (path === "/v1/health" && request.method === "GET") {
     return json({
-      ok: true,
+      ok: true, author: "Aziel Eliab",
       product: "azbot",
       version: "0.2.0",
       runtime: true,
@@ -46,6 +47,16 @@ export async function handleRuntimeApi(request, url) {
       catalog: CATALOG,
     });
   }
+  if ((path === "/v1/example" || path === "/v1/example/") && (request.method === "GET" || request.method === "HEAD")) {
+    return json({
+      ok: true,
+      product: "azbot",
+      author: "Aziel Eliab",
+      example: EXAMPLE_PAYLOAD,
+      note: "Sample payload only. Does not increment downloads.",
+    });
+  }
+
   if (path === "/v1/skill" && request.method === "GET") {
     return new Response(SKILL, {
       status: 200,
@@ -62,7 +73,8 @@ export async function handleRuntimeApi(request, url) {
       openapi: "3.1.0",
       info: { title: "AZBot", version: "0.2.0", description: LIMITATION },
       paths: {
-        "/v1/health": { get: { operationId: "azbot_health", summary: "Liveness. Does not increment download KV." } },
+              "/v1/example": { get: { operationId: "azbotExample", summary: "Sample JSON payload. Does not increment downloads.", responses: { "200": { description: "OK" } } } },
+      "/v1/health": { get: { operationId: "azbot_health", summary: "Liveness. Does not increment download KV." } },
         "/v1/skill": { get: { operationId: "azbot_skill", summary: "Return AZBot skill markdown. Does not increment download KV." } },
       },
       servers: [{ url: origin }],

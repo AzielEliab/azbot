@@ -116,6 +116,15 @@ flutter run
 
 Isolated counter: Worker `azbot-download-tracker`, project `azbot`, KV `AZBOT_DOWNLOADS`. `/download` serves gzip (`private, no-store`). No 302 to GitHub.
 
+## Use with Grok / ChatGPT / Venice
+
+Catalog OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
+Catalog MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`
+This Worker skill: https://azbot-download-tracker.vibelock.workers.dev/v1/skill
+This Worker OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
+
+Grok: import the catalog or Worker OpenAPI as a custom tool. ChatGPT: GPT Actions (no auth). Venice: HTTP tools. Always send `User-Agent: Mozilla/5.0`.
+
 ## Cite this
 
 Aziel Eliab. AZBot. https://github.com/AzielEliab/azbot. https://azbot-download-tracker.vibelock.workers.dev.
