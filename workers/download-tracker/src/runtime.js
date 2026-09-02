@@ -47,7 +47,14 @@ export async function handleRuntimeApi(request, url) {
     });
   }
   if (path === "/v1/skill" && request.method === "GET") {
-    return json({ markdown: SKILL, limitation: LIMITATION, kv_increment: false });
+    return new Response(SKILL, {
+      status: 200,
+      headers: {
+        "Content-Type": "text/markdown; charset=utf-8",
+        "Cache-Control": "private, no-store",
+        ...corsHeaders(),
+      },
+    });
   }
   if (path === "/openapi.json" && request.method === "GET") {
     const origin = originOf(request);
