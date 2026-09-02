@@ -12,5 +12,8 @@ OPENAPI = CATALOG + "/openapi.json"
 MCP = CATALOG + "/mcp"
 
 def skill_text() -> str:
-    here = Path(__file__).resolve().parent.parent / "SKILL.md"
-    return here.read_text(encoding="utf-8")
+    here = Path(__file__).resolve().parent
+    for candidate in (here / "SKILL.md", here.parent / "SKILL.md"):
+        if candidate.exists():
+            return candidate.read_text(encoding="utf-8")
+    raise FileNotFoundError("AZBot SKILL.md missing")

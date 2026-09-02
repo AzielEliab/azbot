@@ -1,0 +1,3 @@
+include LICENSE README.md SKILL.md
+graft azbot/web
+include azbot/SKILL.md
