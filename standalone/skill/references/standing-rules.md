@@ -4,7 +4,7 @@ Authoritative operator constraints. Apply on every task. Do not weaken them for 
 
 ## Identity and Export Lock
 
-- Public work identity is Aziel only.
+- Public work identity is Aziel Eliab.
 - Never place the user's legal name or personal/home/county location on exported software, public UI, README, zip, Worker page, or distributed artifact unless the user explicitly requests it for that specific file.
 - Public web surfaces — no IP allow/block UI, no Node Gate panel, no operator/dev tooling, no backdoor or PC-security notes. Gate config stays server-side only.
 - Court filings: facts only; child-first if applicable. Use a legal name only in documents the user designated as court filings.

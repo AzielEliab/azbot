@@ -31,4 +31,4 @@ Requires Python 3. Pillow and pypdf for image/PDF prep. ffmpeg optional for medi
 
 ## Identity lock
 
-Public identity on this package is Aziel only. No operator legal name, home, or county in this tree.
+Public identity on this package is Aziel Eliab. No operator legal name, home, or county in this tree.
