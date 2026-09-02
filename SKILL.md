@@ -61,3 +61,11 @@ Grok: import the OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP to
 | ark | The ARK | a kernel; hosted unlock |
 | azai | AZAI | a new model; hosted paid proxy |
 | spectrallock | SpectralLock | spectrometer / forensic ink |
+
+
+## Local (after one-click install)
+
+```bash
+curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash
+azbot ui
+```

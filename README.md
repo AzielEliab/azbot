@@ -9,6 +9,40 @@
 
 > AZBot is a skill, not a model. Not Grok weights. Jeeves is not sovereign. Forks are welcome and always allowed.
 
+
+## One-click install
+
+```bash
+curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash
+```
+
+The script curls the **counted** tarball from this project's Worker
+(`/download`, User-Agent `Mozilla/5.0`), extracts, makes a venv, and
+`pip install -e .`. Then run `azbot ui`.
+
+Or tap **Download** / **One-click install** on the Worker homepage
+(a 6th-grader can tap it):
+https://azbot-download-tracker.vibelock.workers.dev/
+
+## Counted download (Cloudflare Worker)
+
+**This is the counted download.** GitHub releases exist as a mirror.
+The Worker serves the gzip itself (HTTP 200, no 302 to GitHub).
+
+# → [https://azbot-download-tracker.vibelock.workers.dev/](https://azbot-download-tracker.vibelock.workers.dev/) ←
+
+Direct tarball (also counted):
+[azbot-0.2.0.tar.gz](https://azbot-download-tracker.vibelock.workers.dev/download?asset=azbot-0.2.0.tar.gz)
+
+- Live count JSON: [https://azbot-download-tracker.vibelock.workers.dev/stats](https://azbot-download-tracker.vibelock.workers.dev/stats)
+- OpenAPI: [https://azbot-download-tracker.vibelock.workers.dev/openapi.json](https://azbot-download-tracker.vibelock.workers.dev/openapi.json)
+- Skill: [https://azbot-download-tracker.vibelock.workers.dev/v1/skill](https://azbot-download-tracker.vibelock.workers.dev/v1/skill)
+- One-click install: [https://azbot-download-tracker.vibelock.workers.dev/install.sh](https://azbot-download-tracker.vibelock.workers.dev/install.sh)
+- GitHub: [https://github.com/AzielEliab/azbot](https://github.com/AzielEliab/azbot)
+
+Isolated counter: Worker `azbot-download-tracker`, KV `AZBOT_DOWNLOADS`. Not mixed with any other product. `/v1` does not increment downloads.
+
+
 ## Quick start
 
 ```bash
