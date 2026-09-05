@@ -6,7 +6,7 @@ from azbot.cli import main
 REPO = Path(__file__).resolve().parent.parent
 
 TOOLKIT_HEADINGS = (
-    "## Aziel Eliab Runtime toolkit (1.3.0 engine-runtime)",
+    "## Aziel Eliab Runtime toolkit (1.4.0 engine-runtime)",
     "## AzielTether toolkit (0.1.0)",
     "## FoldLock toolkit (0.8.0)",
     "## AZ-CLCE toolkit (0.3.0)",
@@ -75,9 +75,9 @@ def test_skill_is_honest() -> None:
     assert "openapi.json" in skill_text()
 
 
-def test_runtime_section_is_1_3_0() -> None:
+def test_runtime_section_is_1_4_0() -> None:
     text = skill_text()
-    assert "1.3.0 engine-runtime" in text
+    assert "1.4.0 engine-runtime" in text
     assert "true runtime 1.1.0" not in text.lower()
     assert "open → policy → exec → receipt → close" in text
     assert "engine_digest" in text
