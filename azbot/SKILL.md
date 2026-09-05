@@ -1,9 +1,12 @@
 ---
 name: AZBot
 description: >-
-  Use when Grok, ChatGPT, Venice, or any assistant should call Aziel Eliab public
-  engines via aziel-runtime, godlock.uk, or azielcorpuslibrary.net — front-door
-  HTTP only; metadata scrape OK; never backdoor.
+  Use when ChatGPT, Grok, Venice, Claude, Cursor, Glama, Perplexity,
+  Microsoft Copilot / Bing, Google Gemini / Vertex, Mistral, Meta AI,
+  Apple Intelligence surfaces, Amazon Q tooling, DuckAssist, You.com,
+  Cohere, or any MCP/OpenAPI-capable assistant should call Aziel Eliab
+  public engines via aziel-runtime, godlock.uk, or azielcorpuslibrary.net
+  — front-door HTTP only; metadata scrape OK; never backdoor.
 ---
 
 # AZBot
@@ -94,7 +97,7 @@ curl -s -A 'Mozilla/5.0' 'https://www.azielcorpuslibrary.net/v1/search?q=Empiric
 
 MCP tools are named `{slug}_{op}` (example `azclce_score`, `spectrallock_overlay`, `azai_lamb_check`, `aziel-corpus_search`). Runtime helpers: `runtime_skill`, `runtime_manifest`, `runtime_bundle`, `runtime_pull`, `runtime_session_open`, `runtime_session_policy`, `runtime_session_exec`, `runtime_session_receipt`, `runtime_session_receipts`, `runtime_session_close`.
 
-Grok: import the OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP tools.
+Import OpenAPI as a custom tool, GPT Action, or HTTP tool. Connect MCP at `POST https://aziel-runtime.vibelock.workers.dev/mcp`. Clients: ChatGPT (GPT Actions / OpenAI), Grok (xAI), Venice, Claude (Anthropic), Cursor (MCP), Glama (MCP), Perplexity, Microsoft Copilot / Bing, Google Gemini / Vertex, Mistral, Meta AI, Apple Intelligence surfaces, Amazon Q tooling, DuckAssist, You.com, Cohere, and other MCP/OpenAPI-capable assistants.
 
 ## Products (honest one-liners)
 
@@ -807,4 +810,4 @@ azbot ui
 azbot doctor
 ```
 
-Grok: import catalog or Worker OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP tools.
+Import catalog or Worker OpenAPI as a custom tool, GPT Action, or HTTP tool. Connect MCP at the catalog MCP URL. Clients: ChatGPT (GPT Actions / OpenAI), Grok (xAI), Venice, Claude (Anthropic), Cursor (MCP), Glama (MCP), Perplexity, Microsoft Copilot / Bing, Google Gemini / Vertex, Mistral, Meta AI, Apple Intelligence surfaces, Amazon Q tooling, DuckAssist, You.com, Cohere, and other MCP/OpenAPI-capable assistants.

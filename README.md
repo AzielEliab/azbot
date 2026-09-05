@@ -1,6 +1,8 @@
 # AZBot
 
-**The skill Grok, ChatGPT, and Venice import** so they can call Aziel Eliab public engines. Locally it also runs custom skills and Cursor `SKILL.md` files.
+**The skill OpenAPI- and MCP-capable assistants import** so they can call Aziel Eliab public engines. Locally it also runs custom skills and Cursor `SKILL.md` files.
+
+Clients: ChatGPT (GPT Actions / OpenAI), Grok (xAI), Venice, Claude (Anthropic), Cursor (MCP), Glama (MCP), Perplexity, Microsoft Copilot / Bing, Google Gemini / Vertex, Mistral, Meta AI, Apple Intelligence surfaces, Amazon Q tooling, DuckAssist, You.com, Cohere, and other MCP/OpenAPI-capable assistants.
 
 **Author:** Aziel Eliab  
 **Date:** 2026  
@@ -116,14 +118,21 @@ flutter run
 
 Isolated counter: Worker `azbot-download-tracker`, project `azbot`, KV `AZBOT_DOWNLOADS`. `/download` serves gzip (`private, no-store`). No 302 to GitHub.
 
-## Use with Grok / ChatGPT / Venice
+## Use with OpenAPI / MCP clients
 
 Catalog OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
 Catalog MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`
 This Worker skill: https://azbot-download-tracker.vibelock.workers.dev/v1/skill
 This Worker OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
 
-Grok: import the catalog or Worker OpenAPI as a custom tool. ChatGPT: GPT Actions (no auth). Venice: HTTP tools. Always send `User-Agent: Mozilla/5.0`.
+Import the catalog or Worker OpenAPI as a custom tool, GPT Action, or HTTP tool. Connect MCP at the catalog MCP URL. Always send `User-Agent: Mozilla/5.0`.
+
+Known clients: ChatGPT (GPT Actions / OpenAI), Grok (xAI), Venice, Claude (Anthropic), Cursor (MCP), Glama (MCP), Perplexity, Microsoft Copilot / Bing, Google Gemini / Vertex, Mistral, Meta AI, Apple Intelligence surfaces, Amazon Q tooling, DuckAssist, You.com, Cohere, and other MCP/OpenAPI-capable assistants.
+
+Practical import notes (same two doors; no per-crawler installer):
+
+- OpenAPI: ChatGPT uses GPT Actions (no auth). Grok imports a custom tool. Venice uses HTTP tools. Other OpenAPI clients import the same JSON.
+- MCP: Cursor and Glama connect to the catalog MCP URL. Other MCP clients use the same POST.
 
 ## Cite this
 

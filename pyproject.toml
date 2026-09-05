@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "azbot"
 version = "0.2.0"
-description = "AZBot: Grok/ChatGPT/Venice skill plus a local runner for custom skills and Cursor SKILL.md files. Not a model. Not Grok weights."
+description = "AZBot: OpenAPI/MCP skill for ChatGPT, Grok, Venice, Claude, Cursor, Glama, and other assistants, plus a local runner for custom skills and Cursor SKILL.md files. Not a model. Not Grok weights."
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [{name = "Aziel Eliab"}]

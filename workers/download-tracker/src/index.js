@@ -282,11 +282,11 @@ async function indexHtml(env) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AZBot — Aziel Eliab</title>
-<meta name="description" content="Skill pack by Aziel Eliab so Grok, ChatGPT, and Venice can call public Aziel Eliab engines.">
+<meta name="description" content="Skill pack by Aziel Eliab so OpenAPI/MCP-capable assistants can call public Aziel Eliab engines.">
 <meta name="author" content="Aziel Eliab">
 <link rel="canonical" href="https://azbot-download-tracker.vibelock.workers.dev/">
 <meta property="og:title" content="AZBot — Aziel Eliab">
-<meta property="og:description" content="Skill pack by Aziel Eliab so Grok, ChatGPT, and Venice can call public Aziel Eliab engines.">
+<meta property="og:description" content="Skill pack by Aziel Eliab so OpenAPI/MCP-capable assistants can call public Aziel Eliab engines.">
 <meta property="og:url" content="https://azbot-download-tracker.vibelock.workers.dev/">
 <meta property="og:type" content="website">
 <script type="application/ld+json">
@@ -302,7 +302,7 @@ async function indexHtml(env) {
   "downloadUrl": "https://azbot-download-tracker.vibelock.workers.dev/download",
   "license": "https://www.apache.org/licenses/LICENSE-2.0",
   "url": "https://azbot-download-tracker.vibelock.workers.dev/",
-  "description": "Skill pack by Aziel Eliab so Grok, ChatGPT, and Venice can call public Aziel Eliab engines."
+  "description": "Skill pack by Aziel Eliab so OpenAPI/MCP-capable assistants can call public Aziel Eliab engines."
 }
 </script>
 <!-- gitbaby-seo -->
@@ -336,7 +336,7 @@ async function indexHtml(env) {
 </style>
 <body>
   <h1>AZBot</h1>
-  <p class="motto">A skill for Grok, ChatGPT, and Venice. Not a model. Jeeves is not sovereign. Author Aziel Eliab.</p>
+  <p class="motto">A skill for ChatGPT, Grok, Venice, Claude, Cursor, Glama, Perplexity, Copilot, Gemini, Mistral, Meta AI, Apple Intelligence, Amazon Q, DuckAssist, You.com, Cohere, and other MCP/OpenAPI clients. Not a model. Jeeves is not sovereign. Author Aziel Eliab.</p>
   <p class="banner">AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime. Author: Aziel Eliab.</p>
   <div class="card">
     <div class="nums">
