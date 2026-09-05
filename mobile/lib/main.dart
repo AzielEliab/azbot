@@ -5,7 +5,7 @@ const openapi = 'https://aziel-runtime.vibelock.workers.dev/openapi.json';
 const mcp = 'https://aziel-runtime.vibelock.workers.dev/mcp';
 const limitation =
     'AZBot is a skill, not a model, not a kernel, not a VPN. '
-    'Jeeves is not sovereign. Paste the OpenAPI into Grok, ChatGPT, or Venice.';
+    'Jeeves is not sovereign. Paste the OpenAPI or MCP URL into ChatGPT, Grok, Venice, Claude, Cursor, or any other MCP/OpenAPI-capable assistant.';
 
 void main() => runApp(const AzbotApp());
 
