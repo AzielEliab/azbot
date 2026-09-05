@@ -129,19 +129,20 @@ Grok: import the OpenAPI as a custom tool. ChatGPT: GPT Actions. Venice: HTTP to
 | whistlelock | WhistleLock | a mailer / hosted drop store |
 | zsolver | ZionPattern Solver | a solved case; cap is 75% |
 
-Catalog versions (aziel-runtime `/v1/catalog.json`): vibelock 0.3.0, veillock 0.2.0, codelock 0.1.0, godlock 0.1.0, shadowlock 0.2.0, temporallock 0.2.0, forgereceipts 0.3.0, decisiongate 0.1.0, zsolver 0.2.0 (live skill also says 0.4.0), azos 0.3.0, glossafilter 0.1.0, miragegrid 0.2.0, staticclock 0.2.0, chronolock 0.1.0, postking 0.1.0, azclce 0.3.0, ark 0.1.0, azai 0.3.1, spectrallock 0.3.0, azbot 0.2.0, employeelock 0.1.0, foldlock 0.8.0, whistlelock 0.1.0, trajectorylock 0.1.0, mialock 0.1.1, azieltether 0.1.0, aziel-corpus 2.6.2 (live library skill 2.7.0). Runtime 1.3.0.
+Catalog versions (aziel-runtime `/v1/catalog.json`): vibelock 0.3.0, veillock 0.2.0, codelock 0.1.0, godlock 0.1.0, shadowlock 0.2.0, temporallock 0.2.0, forgereceipts 0.3.0, decisiongate 0.1.0, zsolver 0.2.0 (live skill also says 0.4.0), azos 0.3.0, glossafilter 0.1.0, miragegrid 0.2.0, staticclock 0.2.0, chronolock 0.1.0, postking 0.1.0, azclce 0.3.0, ark 0.1.0, azai 0.3.1, spectrallock 0.3.0, azbot 0.2.0, employeelock 0.1.0, foldlock 0.8.0, whistlelock 0.1.0, trajectorylock 0.1.0, mialock 0.1.1, azieltether 0.1.0, aziel-corpus 2.6.2 (live library skill 2.7.0). Runtime 1.4.0.
 
 Workers are typically `https://{slug}-download-tracker.vibelock.workers.dev`. Exceptions: aziel-corpus → https://www.azielcorpuslibrary.net ; postking → `postking-download-tracker` ; zsolver → `zsolver-download-tracker` ; az-clce repo → slug `azclce`.
 
 ## Aziel Eliab Runtime toolkit (1.4.0 engine-runtime)
 
-**1.3.0 = catalog + pull + proxy + session + in-process engines** for listed slugs.
+**1.4.0 = catalog + pull + proxy + session + in-process engines** for **every** catalog Software slug.
+**1.3.0 = true engine runtime** for listed portable slugs only (superseded by 1.4.0).
 **1.2.0 = session-runtime** (receipt chain; exec still proxied to product Workers).
 **1.1.0 = catalog + pull + proxy** that started calling itself a runtime. Useful front doors. Not exec.
 
 **THIS IS:** the root engine-runtime. Session `open → policy → exec → receipt → close`. For true-engine slugs (`ark`, `azai`, `azclce`, `decisiongate`, `foldlock`, `zsolver`) exec runs a vendored module **inside the Cloudflare isolate** and the receipt includes `engine_digest`, `engine_slug`, `engine_op`, `ran_in: "aziel-runtime"`.
 
-**THIS IS NOT:** exec for every slug. Other slugs are explicit `proxy_fallback`. `GET/POST /p/{slug}/{op}` is still a **proxy**. Proxy without a session receipt is **not** exec. Hosted / in-process AZAI is protocol mirror + Lamb check, **not** the local blend. No extra guest isolate is claimed. No counted runtime tarball. Do not invent Zenodo DOIs.
+**THIS IS NOT:** a claim that `/p/{slug}/{op}` is exec (that path is still **proxy**). Proxy without a session receipt is **not** exec. Binding-only ops (KV/D1/AI/live media) may still be per-op `proxy_fallback`, but **every catalog slug** is a true in-process engine on session exec. Hosted AZAI is protocol mirror + Lamb check, **not** the local blend. No extra guest isolate is claimed. No counted runtime tarball. Do not invent Zenodo DOIs. Do **not** treat `https://www.azielcorpuslibrary.net/v1/runtime` as the engine manifest — that is Digital Library package discovery; use `/runtime/v1/runtime.json` or `https://aziel-runtime.vibelock.workers.dev/v1/runtime.json`.
 
 Prefer:
 
