@@ -10,7 +10,7 @@ description: >-
 
 AZBot is a **skill**. It is not a new foundation model, not a kernel, not a VPN, not a paid-key proxy, and not Jeeves-as-sovereign.
 
-**THIS IS:** a skill that tethers assistants to Aziel Eliab public front doors and the aziel-runtime 1.3.0 engine-runtime catalog.
+**THIS IS:** a skill that tethers assistants to Aziel Eliab public front doors and the aziel-runtime 1.4.0 engine-runtime catalog.
 
 **THIS IS NOT:** a foundation model, Grok weights, a kernel, a VPN, a paid-key proxy, or Jeeves-as-sovereign. Hosted `/v1` does not increment downloads or views.
 
@@ -133,7 +133,7 @@ Catalog versions (aziel-runtime `/v1/catalog.json`): vibelock 0.3.0, veillock 0.
 
 Workers are typically `https://{slug}-download-tracker.vibelock.workers.dev`. Exceptions: aziel-corpus → https://www.azielcorpuslibrary.net ; postking → `postking-download-tracker` ; zsolver → `zsolver-download-tracker` ; az-clce repo → slug `azclce`.
 
-## Aziel Eliab Runtime toolkit (1.3.0 engine-runtime)
+## Aziel Eliab Runtime toolkit (1.4.0 engine-runtime)
 
 **1.3.0 = catalog + pull + proxy + session + in-process engines** for listed slugs.
 **1.2.0 = session-runtime** (receipt chain; exec still proxied to product Workers).

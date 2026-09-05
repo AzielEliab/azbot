@@ -1,13 +1,13 @@
 ---
 name: aziel-runtime
-description: Call Aziel Eliab public engines through the aziel-runtime 1.3.0 engine-runtime (catalog + pull + proxy + session + in-process engines). Use when scoring, overlay, health, session exec, or any catalog tool is needed.
+description: Call Aziel Eliab public engines through the aziel-runtime 1.4.0 engine-runtime (catalog + pull + proxy + session + in-process engines). Use when scoring, overlay, health, session exec, or any catalog tool is needed.
 ---
 
 # aziel-runtime
 
 Call the live engine-runtime. Do not invent scores, overlays, receipts, or health.
 
-**1.3.0** = catalog + pull + proxy + session + in-process engines for listed slugs.
+**1.4.0** = catalog + pull + proxy + session + in-process engines for listed slugs.
 **1.2.0** = session/receipt (exec still proxied).
 **1.1.0** = catalog + pull + proxy. Useful front doors. Not exec.
 
