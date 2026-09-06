@@ -10,7 +10,7 @@ import { handleRuntimeApi } from "./runtime.js";
  * GET  /count   {project, views, downloads, total} — same shape as AZHub / PeaceLock
  * GET  /stats   JSON totals + per-repo + per-branch breakdown
  * POST /event   forks report a download {owner,repo,branch,fork,asset}
- * /v1 and /mcp do not increment.
+ * /v1, /mcp, and /v1/mesh/* do not increment.
  *
  * KV binding DOWNLOADS. Keys: project|owner|repo|branch|fork
  * CORS *. No secrets in this tree.
@@ -33,8 +33,8 @@ const INSTALL_LINE = "curl -fsSL https://azbot-download-tracker.vibelock.workers
 function corsHeaders() {
   return {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Accept, Authorization, X-Aziel-Runtime-Token, User-Agent",
   };
 }
 
@@ -336,11 +336,33 @@ async function indexHtml(env) {
   .cite h2 { font-size: 1.05rem; margin: 0 0 .4rem; }
   .cite p { color: #c5ccd8; font-size: .95rem; }
   .cite a { color: #c9d4ff; }
+  #meshStrip { border: 1px solid #c9a227; border-radius: 12px; padding: .85rem 1rem; background: #151922; margin: 0 0 1.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1rem; font-size: .88rem; color: #9aa3b2; }
+  #meshStrip .live { color: #e8eaef; }
+  #meshStrip .live b { color: #c9a227; font-size: 1.35rem; margin-right: .35rem; }
+  #meshStrip .rollup b { color: #c9a227; }
+  #meshStrip button { font: 700 .78rem/1 ui-monospace, Menlo, Consolas, monospace; height: 2rem; padding: 0 .75rem; border-radius: 8px; background: #0e1014; color: #e8eaef; border: 1px solid #c9a227; cursor: pointer; }
+  #meshStrip button:hover { background: #241c0d; color: #c9a227; }
+  #meshStrip input { width: 10rem; padding: .4rem .55rem; border: 1px solid #c9a227; border-radius: 8px; background: #0e1014; color: #e8eaef; font: inherit; }
+  #meshProducts { flex-basis: 100%; margin: 0; }
 </style>
 <body>
   <h1>AZBot</h1>
   <p class="motto">A skill for ChatGPT, Grok, Venice, Claude, Cursor, Glama, Perplexity, Copilot, Gemini, Mistral, Meta AI, Apple Intelligence, Amazon Q, DuckAssist, You.com, Cohere, and other MCP/OpenAPI clients. Not a model. Jeeves is not sovereign. Author Aziel Eliab.</p>
   <p class="banner">AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime. Author: Aziel Eliab.</p>
+  <div id="meshStrip" aria-label="Suite Live Nodes">
+    <div class="live"><b id="meshLiveCount">0</b> Live Nodes</div>
+    <div id="meshLine">Suite mesh: off (default). QNM-BUILD-1.0. Not an anonymity network.</div>
+    <div class="rollup">live <b id="qnmLive">0</b> · locked <b id="qnmLocked">0</b> · isolated <b id="qnmIsolated">0</b></div>
+    <div>No Node Gate · No auto-heal · Aziel Eliab only</div>
+    <div>
+      <input id="meshBearer" type="text" maxlength="80" placeholder="bearer (required to enable)" aria-label="mesh bearer">
+      <button id="meshEnable" type="button" title="Enable suite mesh. Declared bearer required. Default off.">Enable</button>
+      <button id="meshDisable" type="button" title="Disable suite mesh (always allowed)">Disable</button>
+      <button id="meshJoin" type="button" title="Join as azbot. Refused while mesh is OFF. No auto-join.">Join</button>
+      <button id="meshLeave" type="button" title="Leave this node. No auto-heal.">Leave</button>
+    </div>
+    <div id="meshProducts">Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate</div>
+  </div>
   <div class="card">
     <div class="nums">
       <p class="count">${v}<span>Views</span></p>
@@ -354,9 +376,9 @@ async function indexHtml(env) {
     <pre id="install-cmd">curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash</pre>
     <p class="kid">Then run: <code>azbot ui</code> and open http://127.0.0.1:8870 (this computer only).</p>
     <p class="meta">The download count ticks on the Download click. The Worker serves the gzip (HTTP 200). No 302 to GitHub. Forks using this same link are counted automatically. ${DEFAULT_ASSET} — ${n} counted.</p>
-    <p class="iso">Isolated counter: Worker <code>azbot-download-tracker</code>, project <code>azbot</code>, KV <code>AZBOT_DOWNLOADS</code>. Not mixed with any other product. /v1 does not increment downloads.</p>
+    <p class="iso">Isolated counter: Worker <code>azbot-download-tracker</code>, project <code>azbot</code>, KV <code>AZBOT_DOWNLOADS</code>. Not mixed with any other product. /v1, /mcp, and /v1/mesh/* do not increment downloads.</p>
     
-    <p class="meta"><a href="/stats">JSON stats</a> · <a href="/openapi.json">OpenAPI</a> · <a href="/v1/skill">Skill</a> · <a href="/ai">AI runtime</a> · <a href="${GITHUB_REPO}">GitHub</a> · <a href="${GITHUB_LATEST}">releases</a></p>
+    <p class="meta"><a href="/stats">JSON stats</a> · <a href="/openapi.json">OpenAPI</a> · <a href="/mcp">MCP</a> · <a href="/v1/mesh">/v1/mesh</a> · <a href="/v1/skill">Skill</a> · <a href="/ai">AI runtime</a> · <a href="${GITHUB_REPO}">GitHub</a> · <a href="${GITHUB_LATEST}">releases</a></p>
     <script>
       (function () {
         var cmd = "curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash";
@@ -382,6 +404,106 @@ async function indexHtml(env) {
           }
         });
       })();
+      (function () {
+        function $(id) { return document.getElementById(id); }
+        function meshNum() {
+          for (var i = 0; i < arguments.length; i++) {
+            var raw = arguments[i];
+            if (raw == null || raw === "") continue;
+            var n = typeof raw === "number" ? raw : Number(String(raw).replace(/,/g, ""));
+            if (Number.isFinite(n) && n >= 0) return Math.floor(n);
+          }
+          return 0;
+        }
+        function unwrapMesh(j) {
+          if (!j || typeof j !== "object") return {};
+          if (j.result && typeof j.result === "object") return Object.assign({}, j, j.result);
+          if (j.mesh && typeof j.mesh === "object") return Object.assign({}, j, j.mesh);
+          return j;
+        }
+        function paintMesh(raw) {
+          var j = unwrapMesh(raw);
+          var on = j.enabled === true || j.enabled === 1 || String(j.status || "").toLowerCase() === "on";
+          var r = (j.rollup && typeof j.rollup === "object") ? j.rollup : {};
+          var live = on ? meshNum(r.live, j.live_nodes, j.live) : 0;
+          var locked = on ? meshNum(r.locked, j.locked_nodes, j.locked) : 0;
+          var isolated = on ? meshNum(r.isolated, j.isolated_nodes, j.isolated) : 0;
+          $("meshLiveCount").textContent = String(live);
+          $("qnmLive").textContent = String(live);
+          $("qnmLocked").textContent = String(locked);
+          $("qnmIsolated").textContent = String(isolated);
+          var line = $("meshLine");
+          if (on) line.textContent = "Suite mesh: on · live " + live + " · locked " + locked + " · isolated " + isolated + ". Not an anonymity network.";
+          else if (j.status === "unavailable" || (j.ok === false && j.error)) line.textContent = "Suite mesh: off (unavailable). QNM-BUILD-1.0. Not an anonymity network.";
+          else line.textContent = "Suite mesh: off (default). QNM-BUILD-1.0. Not an anonymity network.";
+          var products = j.products_present || j.products || [];
+          var names = Array.isArray(products) ? products.map(function (p) { return typeof p === "string" ? p : (p && (p.product || p.slug)) || ""; }).filter(Boolean) : [];
+          var nodes = Array.isArray(j.nodes) ? j.nodes : [];
+          var extra = names.length ? " · products " + names.join(", ") : (nodes.length ? " · " + nodes.length + " node labels" : "");
+          $("meshProducts").textContent = "Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate" + extra;
+        }
+        async function meshGet(path) {
+          var r = await fetch(path, { headers: { "user-agent": "Mozilla/5.0", accept: "application/json" } });
+          return r.json();
+        }
+        async function meshPost(path, payload) {
+          var r = await fetch(path, { method: "POST", headers: { "content-type": "application/json", "user-agent": "Mozilla/5.0" }, body: JSON.stringify(payload || {}) });
+          return r.json();
+        }
+        async function refreshMesh() {
+          try {
+            var status = await meshGet("/v1/mesh");
+            var merged = status;
+            var inner = unwrapMesh(status);
+            var on = inner.enabled === true;
+            if (on) {
+              try {
+                var nodes = await meshGet("/v1/mesh/nodes");
+                merged = Object.assign({}, inner, unwrapMesh(nodes));
+              } catch (e) { /* status is enough */ }
+            }
+            paintMesh(merged);
+            var nodeId = sessionStorage.getItem("azbot_mesh_node");
+            if (on && nodeId) {
+              try { await meshPost("/v1/mesh/heartbeat", { node_id: nodeId }); } catch (e) { /* no auto-heal */ }
+            }
+          } catch (e) {
+            paintMesh({ ok: false, enabled: false, status: "unavailable", error: "mesh_unavailable" });
+          }
+        }
+        $("meshEnable").onclick = async function () {
+          var bearer = ($("meshBearer").value || "").trim();
+          paintMesh(await meshPost("/v1/mesh/enable", bearer ? { bearer: bearer } : {}));
+          refreshMesh();
+        };
+        $("meshDisable").onclick = async function () {
+          sessionStorage.removeItem("azbot_mesh_node");
+          paintMesh(await meshPost("/v1/mesh/disable", {}));
+          refreshMesh();
+        };
+        $("meshJoin").onclick = async function () {
+          var j = await meshPost("/v1/mesh/join", { product: "azbot", label: "AZBot Worker" });
+          var inner = unwrapMesh(j);
+          var id = inner.node_id || inner.id || (inner.session && inner.session.node_id);
+          if (id) sessionStorage.setItem("azbot_mesh_node", String(id));
+          paintMesh(j);
+          refreshMesh();
+        };
+        $("meshLeave").onclick = async function () {
+          var id = sessionStorage.getItem("azbot_mesh_node");
+          if (id) await meshPost("/v1/mesh/leave", { node_id: id });
+          sessionStorage.removeItem("azbot_mesh_node");
+          refreshMesh();
+        };
+        window.addEventListener("pagehide", function () {
+          var id = sessionStorage.getItem("azbot_mesh_node");
+          if (!id || typeof navigator.sendBeacon !== "function") return;
+          try { navigator.sendBeacon("/v1/mesh/leave", new Blob([JSON.stringify({ node_id: id })], { type: "application/json" })); } catch (e) { /* leave expires in 5 minutes */ }
+        });
+        refreshMesh();
+        setInterval(refreshMesh, 30000);
+        document.addEventListener("visibilitychange", function () { if (!document.hidden) refreshMesh(); });
+      })();
     </script>
     <h2>Per repo / branch / fork</h2>
     <ul>${breakdown}</ul>
@@ -406,7 +528,7 @@ export default {
       return new Response(null, { status: 204, headers: corsHeaders() });
     }
 
-    const runtime = await handleRuntimeApi(request, url);
+    const runtime = await handleRuntimeApi(request, url, env);
     if (runtime) return runtime;
 
     if ((url.pathname === "/install.sh" || url.pathname === "/install.sh/") && request.method === "GET") {
@@ -491,7 +613,7 @@ export default {
       });
     }
     if ((url.pathname === "/sitemap.xml" || url.pathname === "/sitemap.xml/") && request.method === "GET") {
-      const locs = [HOST + "/", HOST + "/download", HOST + "/install.sh", HOST + "/v1/skill", HOST + "/openapi.json", GITHUB_REPO];
+      const locs = [HOST + "/", HOST + "/download", HOST + "/install.sh", HOST + "/v1/skill", HOST + "/v1/mesh", HOST + "/openapi.json", HOST + "/mcp", GITHUB_REPO];
       const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + locs.map((u) => "  <url><loc>" + u + "</loc></url>").join("\n")
         + "\n</urlset>\n";
@@ -501,7 +623,7 @@ export default {
       });
     }
     if ((url.pathname === "/cite.json" || url.pathname === "/cite.json/") && request.method === "GET") {
-      return json({"author": "Aziel Eliab", "title": "AZBot", "github": "https://github.com/AzielEliab/azbot", "download": "https://azbot-download-tracker.vibelock.workers.dev/download", "doi": null, "license": "Apache-2.0", "catalog": "https://aziel-runtime.vibelock.workers.dev/"});
+      return json({"author": "Aziel Eliab", "title": "AZBot", "github": "https://github.com/AzielEliab/azbot", "download": "https://azbot-download-tracker.vibelock.workers.dev/download", "doi": null, "license": "Apache-2.0", "catalog": "https://aziel-runtime.vibelock.workers.dev/", "mesh": HOST + "/v1/mesh", "mesh_catalog": "https://aziel-runtime.vibelock.workers.dev/v1/mesh"});
     }
     // /gitbaby-seo-routes
     return json({ error: "not found" }, 404);

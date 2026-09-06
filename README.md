@@ -40,6 +40,7 @@ Direct tarball (also counted):
 - Live stats JSON: [https://azbot-download-tracker.vibelock.workers.dev/stats](https://azbot-download-tracker.vibelock.workers.dev/stats)
 - OpenAPI: [https://azbot-download-tracker.vibelock.workers.dev/openapi.json](https://azbot-download-tracker.vibelock.workers.dev/openapi.json)
 - Skill: [https://azbot-download-tracker.vibelock.workers.dev/v1/skill](https://azbot-download-tracker.vibelock.workers.dev/v1/skill)
+- Suite mesh proxy: [https://azbot-download-tracker.vibelock.workers.dev/v1/mesh](https://azbot-download-tracker.vibelock.workers.dev/v1/mesh) — default OFF; QNM live / locked / isolated
 - One-click install: [https://azbot-download-tracker.vibelock.workers.dev/install.sh](https://azbot-download-tracker.vibelock.workers.dev/install.sh)
 - GitHub: [https://github.com/AzielEliab/azbot](https://github.com/AzielEliab/azbot)
 
@@ -74,6 +75,7 @@ Live skill JSON: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/ski
 - Not an upload proxy.
 - Not an untraceable-origin system. Network origin of anything you later post is still your channel.
 - Hosted `/v1/skill` returns skill markdown. It does not run the other engines itself.
+- Suite mesh `/v1/mesh/*` PROXY to aziel-runtime via `AZIEL_RUNTIME`. Default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Catalog MCP `mesh_*` + FragGate `slug=mesh`.
 - The engines live on [aziel-runtime](https://aziel-runtime.vibelock.workers.dev/).
 - Lamb Lens: Peace → Clarity → Service.
 
@@ -115,6 +117,7 @@ flutter run
 - OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
 - Health: `GET /v1/health`
 - Skill: `GET /v1/skill` — does **not** increment downloads
+- Suite mesh: `GET /v1/mesh` PROXY (default OFF). QNM-BUILD-1.0 live|locked|isolated. No Node Gate
 - Catalog: https://aziel-runtime.vibelock.workers.dev/
 
 Isolated counter: Worker `azbot-download-tracker`, project `azbot`, KV `AZBOT_DOWNLOADS`. `/download` serves gzip (`private, no-store`). No 302 to GitHub.
@@ -125,6 +128,7 @@ Catalog OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
 Catalog MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`
 This Worker skill: https://azbot-download-tracker.vibelock.workers.dev/v1/skill
 This Worker OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
+This Worker `/v1/fraggate/*` and `/v1/mesh/*` PROXY via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Catalog MCP `mesh_*` + FragGate `slug=mesh`.
 
 Import the catalog or Worker OpenAPI as a custom tool, GPT Action, or HTTP tool. Connect MCP at the catalog MCP URL. Always send `User-Agent: Mozilla/5.0`.
 

@@ -15,7 +15,7 @@ AZBot is a **skill**. It is not a new foundation model, not a kernel, not a VPN,
 
 **THIS IS:** a skill that tethers assistants to Aziel Eliab public front doors and the aziel-runtime 1.4.0 engine-runtime catalog.
 
-**THIS IS NOT:** a foundation model, Grok weights, a kernel, a VPN, a paid-key proxy, or Jeeves-as-sovereign. Hosted `/v1` does not increment downloads or views.
+**THIS IS NOT:** a foundation model, Grok weights, a kernel, a VPN, a paid-key proxy, or Jeeves-as-sovereign. Hosted `/v1` does not increment downloads or views. This Worker `/v1/fraggate/*` and `/v1/mesh/*` PROXY to aziel-runtime via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity.
 
 Always send `User-Agent: Mozilla/5.0`. Cloudflare Workers may 403 empty agents.
 
@@ -30,6 +30,7 @@ Author: **Aziel Eliab** only. Do not invent Zenodo DOIs. Cite a DOI only when th
 - OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
 - MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`
 - Manifest: `GET https://aziel-runtime.vibelock.workers.dev/v1/runtime.json` (`role=engine-runtime`)
+- Suite mesh: `GET https://aziel-runtime.vibelock.workers.dev/v1/mesh` (default OFF). This Worker PROXY: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/mesh`
 
 ### 2) GodLock public board
 
@@ -312,10 +313,12 @@ This skill. Local runner for custom and Cursor `SKILL.md` files. Author Aziel El
 - Download: `GET https://azbot-download-tracker.vibelock.workers.dev/download` → `azbot-0.2.0.tar.gz`
 - Catalog aliases: `https://aziel-runtime.vibelock.workers.dev/p/azbot/{health,skill}`
 - MCP tools: `azbot_health`, `azbot_skill`
+- Suite mesh PROXY: `GET /v1/mesh` (default OFF). QNM-BUILD-1.0 live|locked|isolated. No Node Gate. Catalog MCP `mesh_*` + FragGate `slug=mesh`. Bearer required to enable.
 
 ```bash
 curl -s -A 'Mozilla/5.0' https://azbot-download-tracker.vibelock.workers.dev/v1/health
 curl -s -A 'Mozilla/5.0' https://azbot-download-tracker.vibelock.workers.dev/v1/skill
+curl -s -A 'Mozilla/5.0' https://azbot-download-tracker.vibelock.workers.dev/v1/mesh
 ```
 
 ## Aziel Digital Library toolkit (catalog 2.6.2 / live 2.7.0)
@@ -798,6 +801,7 @@ Author: **Aziel Eliab**. Honest scope: Skill, not a foundation model. Hosted `/v
 - Catalog MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`
 - This Worker skill: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/skill`
 - This Worker OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
+- Suite mesh: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/mesh` PROXY (default OFF). Catalog MCP `mesh_*` + FragGate `slug=mesh`.
 - GodLock board: https://godlock.uk/
 - Library: https://www.azielcorpuslibrary.net/
 - Runtime: https://www.azielcorpuslibrary.net/runtime · https://aziel-runtime.vibelock.workers.dev/

@@ -11,4 +11,17 @@ id = "1d49ab4d6c5b437e84449503f9cae41c"
 [assets]
 directory = "./public"
 binding = "ASSETS"
+# /mcp and /mcp/ must hit the Worker (not ASSETS).
+# /v1/* covers /v1/fraggate/*, /v1/mesh/* (AZIEL_RUNTIME proxy) and local /v1/{op}.
 run_worker_first = ["/", "/install.sh", "/install.sh/", "/download", "/download/*", "/stats", "/event", "/go", "/count", "/v1", "/v1/*", "/openapi.json", "/ai", "/ai/*", "/mcp", "/mcp/", "/robots.txt", "/sitemap.xml", "/cite.json"]
+
+[vars]
+AZIEL_RUNTIME_ORIGIN = "https://aziel-runtime.vibelock.workers.dev"
+
+# Worker→Worker public fetch of aziel-runtime can return HTML/404.
+# Proxy via env.AZIEL_RUNTIME.fetch when the service binding is present.
+# Same binding for suite mesh: /v1/mesh/* (no /v1/fraggate rewrite).
+# Hostname in the binding request is a placeholder (not DNS). HTTP fallback when unbound.
+[[services]]
+binding = "AZIEL_RUNTIME"
+service = "aziel-runtime"
