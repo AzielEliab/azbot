@@ -36,7 +36,8 @@ The Worker serves the gzip itself (HTTP 200, no 302 to GitHub).
 Direct tarball (also counted):
 [azbot-0.2.0.tar.gz](https://azbot-download-tracker.vibelock.workers.dev/download?asset=azbot-0.2.0.tar.gz)
 
-- Live count JSON: [https://azbot-download-tracker.vibelock.workers.dev/stats](https://azbot-download-tracker.vibelock.workers.dev/stats)
+- Compact count JSON (`{project, views, downloads, total}`): [https://azbot-download-tracker.vibelock.workers.dev/count](https://azbot-download-tracker.vibelock.workers.dev/count)
+- Live stats JSON: [https://azbot-download-tracker.vibelock.workers.dev/stats](https://azbot-download-tracker.vibelock.workers.dev/stats)
 - OpenAPI: [https://azbot-download-tracker.vibelock.workers.dev/openapi.json](https://azbot-download-tracker.vibelock.workers.dev/openapi.json)
 - Skill: [https://azbot-download-tracker.vibelock.workers.dev/v1/skill](https://azbot-download-tracker.vibelock.workers.dev/v1/skill)
 - One-click install: [https://azbot-download-tracker.vibelock.workers.dev/install.sh](https://azbot-download-tracker.vibelock.workers.dev/install.sh)

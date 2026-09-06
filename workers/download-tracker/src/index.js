@@ -3,11 +3,14 @@ import { handleRuntimeApi } from "./runtime.js";
 /**
  * AZBot download tracker (Cloudflare Worker).
  *
+ * GET  /        increments views, homepage HTML
  * GET  /download?repo=AzielEliab/azbot&tag=latest&asset=...
- *      increments KV, serves the tarball via env.ASSETS.fetch
+ *      increments downloads, serves the tarball via env.ASSETS.fetch
  *      (does not 302 to GitHub)
+ * GET  /count   {project, views, downloads, total} — same shape as AZHub / PeaceLock
  * GET  /stats   JSON totals + per-repo + per-branch breakdown
  * POST /event   forks report a download {owner,repo,branch,fork,asset}
+ * /v1 and /mcp do not increment.
  *
  * KV binding DOWNLOADS. Keys: project|owner|repo|branch|fork
  * CORS *. No secrets in this tree.
@@ -426,7 +429,12 @@ export default {
 
     if (url.pathname === "/count" && request.method === "GET") {
       const stats = await collectStats(env);
-      return json({ project: PROJECT, total: stats.total || 0 });
+      return json({
+        project: PROJECT,
+        views: stats.views || 0,
+        downloads: stats.downloads || 0,
+        total: stats.total || 0,
+      });
     }
 
     if (url.pathname === "/stats" && request.method === "GET") {

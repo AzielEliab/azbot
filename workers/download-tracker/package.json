@@ -1,4 +1,8 @@
 {
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/count.test.mjs"
+  },
   "dependencies": {
     "wrangler": "^4.127.1"
   }
