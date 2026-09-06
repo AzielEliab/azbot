@@ -7,6 +7,7 @@ dist/
 node_modules/
 workers/download-tracker/node_modules/
 workers/download-tracker/public/*.tar.gz
+!workers/download-tracker/public/azbot-0.2.0.tar.gz
 .wrangler
 standalone/out/
 standalone/work/
