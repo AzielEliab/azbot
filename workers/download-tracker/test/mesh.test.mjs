@@ -1,7 +1,7 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import worker from "../src/index.js";
-import { meshPointer, runMeshProxy } from "../src/mesh.js";
+import { meshPointer, publicMesh, runMeshProxy, QNS_CD, QNS_CD_SPEC } from "../src/mesh.js";
 
 const origFetch = globalThis.fetch;
 const seen = [];
@@ -100,6 +100,20 @@ test("mesh pointer stays default OFF", () => {
   assert.equal(p.anon_broadcast_publish_path, false);
 });
 
+test("mesh pointer and publicMesh cite QNS-CD-1.0", () => {
+  const p = meshPointer();
+  assert.equal(p.qns_cd_spec, "QNS-CD-1.0");
+  assert.equal(p.qns_cd.spec, QNS_CD_SPEC);
+  assert.equal(p.qns_cd.local_qnsd, "https://github.com/AzielEliab/qnm-node");
+  assert.equal(p.qns_cd.runtime_design, QNS_CD.runtime_design);
+  assert.match(p.note, /QNS-CD-1.0 companion to QNM-BUILD-1.0/);
+  const pub = publicMesh();
+  assert.equal(pub.enabled, false);
+  assert.equal(pub.qns_cd_spec, "QNS-CD-1.0");
+  assert.equal(pub.qns_cd.spec, "QNS-CD-1.0");
+  assert.equal(pub.node_gate, false);
+});
+
 test("GET /v1/mesh/status returns MESH-OK enabled:false", async () => {
   const bindings = env();
   const res = await fetchPath(bindings, "/v1/mesh/status");
@@ -117,6 +131,9 @@ test("GET /v1/mesh never enables", async () => {
   const data = JSON.parse(await res.text());
   assert.equal(data.enabled, false);
   assert.equal(data.code, "MESH-OK");
+  assert.equal(data.qns_cd_spec, "QNS-CD-1.0");
+  assert.equal(data.qns_cd.spec, "QNS-CD-1.0");
+  assert.equal(data.qns_cd.local_qnsd, "https://github.com/AzielEliab/qnm-node");
 });
 
 test("POST /v1/mesh/enable without bearer stays OFF", async () => {
@@ -158,6 +175,8 @@ test("homepage HTML has Live Nodes strip and no Node Gate", async () => {
   assert.match(html, /id="meshStrip"/);
   assert.match(html, /Live Nodes/);
   assert.match(html, /QNM-BUILD-1.0/);
+  assert.match(html, /QNS-CD-1.0/);
+  assert.match(html, /id="qnsCdLine"/);
   assert.match(html, /No Node Gate/);
   assert.doesNotMatch(html, /id="node-gate"/);
 });
@@ -171,12 +190,24 @@ test("runMeshProxy uses AZIEL_RUNTIME binding", async () => {
   assert.ok(seen.some((s) => s.method === "GET" && s.path === "/v1/mesh"));
 });
 
+test("GET /cite.json cites QNS-CD-1.0", async () => {
+  const bindings = env();
+  const cite = JSON.parse(await (await fetchPath(bindings, "/cite.json")).text());
+  assert.equal(cite.author, "Aziel Eliab");
+  assert.equal(cite.qns_cd_spec, "QNS-CD-1.0");
+  assert.equal(cite.qns_cd.spec, "QNS-CD-1.0");
+  assert.equal(cite.qns_cd.local_qnsd, "https://github.com/AzielEliab/qnm-node");
+});
+
 test("GET /mcp and /openapi.json point at suite mesh", async () => {
   const bindings = env();
   const mcp = JSON.parse(await (await fetchPath(bindings, "/mcp")).text());
   assert.equal(mcp.mesh.enabled_default, false);
   assert.equal(mcp.mesh.fraggate_slug, "mesh");
+  assert.equal(mcp.mesh.qns_cd_spec, "QNS-CD-1.0");
+  assert.match(mcp.note, /QNS-CD-1.0 companion to QNM-BUILD-1.0/);
   const spec = JSON.parse(await (await fetchPath(bindings, "/openapi.json")).text());
   assert.ok(spec.paths["/v1/mesh"]);
   assert.ok(spec.paths["/v1/mesh/status"]);
+  assert.match(spec.info.description, /QNS-CD-1.0 companion to QNM-BUILD-1.0/);
 });
