@@ -75,9 +75,17 @@ Live skill JSON: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/ski
 - Not an upload proxy.
 - Not an untraceable-origin system. Network origin of anything you later post is still your channel.
 - Hosted `/v1/skill` returns skill markdown. It does not run the other engines itself.
-- Suite mesh `/v1/mesh/*` PROXY to aziel-runtime via `AZIEL_RUNTIME`. Default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Catalog MCP `mesh_*` + FragGate `slug=mesh`.
+- Suite mesh `/v1/mesh/*` PROXY to aziel-runtime via `AZIEL_RUNTIME`. Default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion (cite/proxy only). No Node Gate. No auto-heal. Not anonymity. Catalog MCP `mesh_*` + FragGate `slug=mesh`.
 - The engines live on [aziel-runtime](https://aziel-runtime.vibelock.workers.dev/).
 - Lamb Lens: Peace → Clarity → Service.
+
+## QNS-CD-1.0
+
+Cross-map only. Not a new product. Not a Softwares-tab engine.
+
+Companion to QNM-BUILD-1.0. Local qnsd: [qnm-node](https://github.com/AzielEliab/qnm-node). Runtime design: [QNS-CD-1.0](https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md). This Worker cites/proxies suite mesh. Photon QNS1 vias stay on local qnsd (`127.0.0.1`). Restriction walks next via class. `GET /v1/mesh` never enables. No Node Gate. No local qnsd HTTP on this public Worker.
+
+Author: Aziel Eliab.
 
 ## Skills (custom + Cursor)
 
@@ -117,7 +125,7 @@ flutter run
 - OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
 - Health: `GET /v1/health`
 - Skill: `GET /v1/skill` — does **not** increment downloads
-- Suite mesh: `GET /v1/mesh` PROXY (default OFF). QNM-BUILD-1.0 live|locked|isolated. No Node Gate
+- Suite mesh: `GET /v1/mesh` PROXY (default OFF). QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion. No Node Gate
 - Catalog: https://aziel-runtime.vibelock.workers.dev/
 
 Isolated counter: Worker `azbot-download-tracker`, project `azbot`, KV `AZBOT_DOWNLOADS`. `/download` serves gzip (`private, no-store`). No 302 to GitHub.
@@ -128,7 +136,7 @@ Catalog OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
 Catalog MCP: `POST https://aziel-runtime.vibelock.workers.dev/mcp`
 This Worker skill: https://azbot-download-tracker.vibelock.workers.dev/v1/skill
 This Worker OpenAPI: https://azbot-download-tracker.vibelock.workers.dev/openapi.json
-This Worker `/v1/fraggate/*` and `/v1/mesh/*` PROXY via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Catalog MCP `mesh_*` + FragGate `slug=mesh`.
+This Worker `/v1/fraggate/*` and `/v1/mesh/*` PROXY via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion to QNM-BUILD-1.0. No Node Gate. No auto-heal. Not anonymity. Catalog MCP `mesh_*` + FragGate `slug=mesh`.
 
 Import the catalog or Worker OpenAPI as a custom tool, GPT Action, or HTTP tool. Connect MCP at the catalog MCP URL. Always send `User-Agent: Mozilla/5.0`.
 
@@ -141,7 +149,7 @@ Practical import notes (same two doors; no per-crawler installer):
 
 ## Cite this
 
-Aziel Eliab. AZBot. https://github.com/AzielEliab/azbot. https://azbot-download-tracker.vibelock.workers.dev.
+Aziel Eliab. AZBot. https://github.com/AzielEliab/azbot. https://azbot-download-tracker.vibelock.workers.dev. QNS-CD-1.0 companion to QNM-BUILD-1.0 (cross-map to qnm-node + aziel-runtime; not a new product).
 
 - Catalog: https://aziel-runtime.vibelock.workers.dev/
 - Worker homepage: https://azbot-download-tracker.vibelock.workers.dev/

@@ -21,6 +21,11 @@ WORKER_README = (ROOT / "workers/download-tracker/README.md").read_text(encoding
 
 def test_mesh_contract_default_off_qnm_law() -> None:
     assert 'QNM_SPEC = "QNM-BUILD-1.0"' in MESH
+    assert 'QNS_CD_SPEC = "QNS-CD-1.0"' in MESH
+    assert "export const QNS_CD" in MESH
+    assert "https://github.com/AzielEliab/qnm-node" in MESH
+    assert "docs/designs/QNS-CD-1.0.md" in MESH
+    assert "QNS-CD-1.0 companion to QNM-BUILD-1.0" in MESH
     assert "MESH_DEFAULT_OFF = true" in MESH
     assert "MESH_ANONYMITY_NETWORK = false" in MESH
     assert "MESH_NODE_GATE = false" in MESH
@@ -38,6 +43,7 @@ def test_mesh_contract_default_off_qnm_law() -> None:
 
 def test_mesh_pointer_and_openapi_helpers() -> None:
     assert "export function meshPointer" in MESH
+    assert "export function stampQnsCd" in MESH
     assert "export function meshOpenApiPaths" in MESH
     assert "export function parseMeshDoc" in MESH
     assert "export function emptyMesh" in MESH
@@ -64,6 +70,7 @@ def test_runtime_advertises_mesh_proxy_and_pointer() -> None:
     assert "mesh: meshPointer()" in RUNTIME
     assert "/v1/mesh" in RUNTIME
     assert "QNM-BUILD-1.0" in RUNTIME
+    assert "QNS-CD-1.0" in RUNTIME
     assert "No Node Gate" in RUNTIME
     assert "No auto-heal" in RUNTIME
     assert "handleRuntimeApi(request, url, env)" in INDEX
@@ -86,6 +93,8 @@ def test_home_live_nodes_strip_no_node_gate() -> None:
     assert 'id="meshLine"' in HOME
     assert "Live Nodes" in HOME
     assert "QNM-BUILD-1.0" in HOME
+    assert "QNS-CD-1.0" in HOME
+    assert 'id="qnsCdLine"' in HOME
     assert "No Node Gate" in HOME
     assert "No auto-heal" in HOME
     assert "Not an anonymity network" in HOME
@@ -100,8 +109,15 @@ def test_docs_advertise_mesh_proxy() -> None:
     assert "/v1/mesh" in README
     assert "/v1/mesh" in SKILL
     assert "QNM-BUILD-1.0" in WORKER_README
+    assert "QNS-CD-1.0" in WORKER_README
+    assert "qnm-node" in WORKER_README
     assert "AZIEL_RUNTIME" in WORKER_README
     assert "Live Nodes" in WORKER_README
+    assert "QNS-CD-1.0" in README
+    assert "QNS-CD-1.0" in SKILL
+    assert "Not a Softwares-tab engine" in SKILL
+    assert "| qns-cd |" not in SKILL.lower()
+    assert "| qnscd |" not in SKILL.lower()
     assert "Aziel Eliab" in MESH
     assert "Jane Doe" not in MESH
     assert "John Doe" not in MESH

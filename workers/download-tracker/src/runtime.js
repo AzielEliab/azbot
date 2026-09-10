@@ -111,7 +111,7 @@ function mcpPointer() {
     body: { slug: "azbot", op: "health", payload: {} },
     mesh: meshPointer(),
     mesh_body: { slug: "mesh", op: "status", payload: {} },
-    note: "This Worker /mcp is a pointer, not a second MCP. Canonical catalog MCP is POST " + CATALOG + "/mcp (FragGate slug azbot). Catalog MCP mesh_* + FragGate slug=mesh. This Worker /v1/mesh/* PROXY to aziel-runtime via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Author: Aziel Eliab only.",
+    note: "This Worker /mcp is a pointer, not a second MCP. Canonical catalog MCP is POST " + CATALOG + "/mcp (FragGate slug azbot). Catalog MCP mesh_* + FragGate slug=mesh. This Worker /v1/mesh/* PROXY to aziel-runtime via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion to QNM-BUILD-1.0. No Node Gate. No auto-heal. Not anonymity. Author: Aziel Eliab only.",
     kv_increment: false,
   };
 }
@@ -148,7 +148,7 @@ export async function handleRuntimeApi(request, url, env) {
       limitation: LIMITATION,
       catalog: CATALOG,
       mesh: meshPointer(),
-      note: "Suite mesh /v1/mesh/* PROXY to aziel-runtime. Default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal.",
+      note: "Suite mesh /v1/mesh/* PROXY to aziel-runtime. Default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion to QNM-BUILD-1.0. No Node Gate. No auto-heal.",
     });
   }
   if ((path === "/v1/example" || path === "/v1/example/") && (request.method === "GET" || request.method === "HEAD")) {
@@ -178,7 +178,7 @@ export async function handleRuntimeApi(request, url, env) {
       info: {
         title: "AZBot",
         version: "0.2.0",
-        description: LIMITATION + " Suite mesh /v1/mesh/* PROXY to aziel-runtime (AZIEL_RUNTIME). Default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Aziel Eliab only.",
+        description: LIMITATION + " Suite mesh /v1/mesh/* PROXY to aziel-runtime (AZIEL_RUNTIME). Default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion to QNM-BUILD-1.0. No Node Gate. No auto-heal. Not anonymity. Aziel Eliab only.",
       },
       paths: {
         "/v1/example": { get: { operationId: "azbotExample", summary: "Sample JSON payload. Does not increment downloads.", responses: { "200": { description: "OK" } } } },
@@ -196,7 +196,8 @@ export async function handleRuntimeApi(request, url, env) {
 <body style="font:16px/1.45 system-ui;max-width:44rem;margin:3rem auto;background:#0e1014;color:#e8eaef">
 <h1>AZBot runtime</h1>
 <p>${LIMITATION}</p>
-<p>Suite mesh: <code>GET ${origin}/v1/mesh</code> PROXY to aziel-runtime. Default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Catalog MCP <code>mesh_*</code> + FragGate <code>slug=mesh</code>. Author: Aziel Eliab only.</p>
+<p>Suite mesh: <code>GET ${origin}/v1/mesh</code> PROXY to aziel-runtime. Default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion to QNM-BUILD-1.0. No Node Gate. No auto-heal. Not anonymity. Catalog MCP <code>mesh_*</code> + FragGate <code>slug=mesh</code>. Author: Aziel Eliab only.</p>
+<p>QNS-CD-1.0 cross-map: <a href="https://github.com/AzielEliab/qnm-node" style="color:#c9d4ff">qnm-node</a> + <a href="https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md" style="color:#c9d4ff">aziel-runtime design</a>. Not a new product. Local qnsd is not hosted here.</p>
 <p>OpenAPI: <a href="${origin}/openapi.json" style="color:#c9d4ff">${origin}/openapi.json</a></p>
 <pre>curl -A Mozilla/5.0 ${origin}/v1/health
 curl -A Mozilla/5.0 ${origin}/v1/skill

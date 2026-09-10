@@ -1,4 +1,5 @@
 import { handleRuntimeApi } from "./runtime.js";
+import { QNS_CD, QNS_CD_SPEC } from "./mesh.js";
 
 /**
  * AZBot download tracker (Cloudflare Worker).
@@ -352,6 +353,7 @@ async function indexHtml(env) {
   <div id="meshStrip" aria-label="Suite Live Nodes">
     <div class="live"><b id="meshLiveCount">0</b> Live Nodes</div>
     <div id="meshLine">Suite mesh: off (default). QNM-BUILD-1.0. Not an anonymity network.</div>
+    <div id="qnsCdLine">QNS-CD-1.0 companion to QNM-BUILD-1.0 · cites/proxies only · local qnsd not hosted</div>
     <div class="rollup">live <b id="qnmLive">0</b> · locked <b id="qnmLocked">0</b> · isolated <b id="qnmIsolated">0</b></div>
     <div>No Node Gate · No auto-heal · Aziel Eliab only</div>
     <div>
@@ -361,7 +363,7 @@ async function indexHtml(env) {
       <button id="meshJoin" type="button" title="Join as azbot. Refused while mesh is OFF. No auto-join.">Join</button>
       <button id="meshLeave" type="button" title="Leave this node. No auto-heal.">Leave</button>
     </div>
-    <div id="meshProducts">Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate</div>
+    <div id="meshProducts">Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate · QNS-CD-1.0 companion</div>
   </div>
   <div class="card">
     <div class="nums">
@@ -440,7 +442,12 @@ async function indexHtml(env) {
           var names = Array.isArray(products) ? products.map(function (p) { return typeof p === "string" ? p : (p && (p.product || p.slug)) || ""; }).filter(Boolean) : [];
           var nodes = Array.isArray(j.nodes) ? j.nodes : [];
           var extra = names.length ? " · products " + names.join(", ") : (nodes.length ? " · " + nodes.length + " node labels" : "");
-          $("meshProducts").textContent = "Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate" + extra;
+          $("meshProducts").textContent = "Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate · QNS-CD-1.0 companion" + extra;
+          var qns = $("qnsCdLine");
+          if (qns) {
+            var cite = (j.qns_cd && j.qns_cd.spec) ? j.qns_cd.spec : "QNS-CD-1.0";
+            qns.textContent = cite + " companion to QNM-BUILD-1.0 · cites/proxies only · local qnsd not hosted";
+          }
         }
         async function meshGet(path) {
           var r = await fetch(path, { headers: { "user-agent": "Mozilla/5.0", accept: "application/json" } });
@@ -512,6 +519,7 @@ async function indexHtml(env) {
 <section class="cite" id="cite">
   <h2>How to cite</h2>
   <p>Aziel Eliab. AZBot. https://github.com/AzielEliab/azbot. https://azbot-download-tracker.vibelock.workers.dev.</p>
+  <p>QNS-CD-1.0 companion to QNM-BUILD-1.0. Cross-map to <a href="https://github.com/AzielEliab/qnm-node">qnm-node</a> + <a href="https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md">aziel-runtime design</a>. Not a new product. Local qnsd is not hosted here. Author Aziel Eliab.</p>
   <p><a href="https://aziel-runtime.vibelock.workers.dev/">Catalog</a> · <a href="https://github.com/AzielEliab/azbot">GitHub</a> · <a href="https://azbot-download-tracker.vibelock.workers.dev/download">Download</a> · <a href="https://azbot-download-tracker.vibelock.workers.dev/cite.json">cite.json</a></p>
 </section>
 <!-- /gitbaby-seo -->
@@ -623,7 +631,7 @@ export default {
       });
     }
     if ((url.pathname === "/cite.json" || url.pathname === "/cite.json/") && request.method === "GET") {
-      return json({"author": "Aziel Eliab", "title": "AZBot", "github": "https://github.com/AzielEliab/azbot", "download": "https://azbot-download-tracker.vibelock.workers.dev/download", "doi": null, "license": "Apache-2.0", "catalog": "https://aziel-runtime.vibelock.workers.dev/", "mesh": HOST + "/v1/mesh", "mesh_catalog": "https://aziel-runtime.vibelock.workers.dev/v1/mesh"});
+      return json({"author": "Aziel Eliab", "title": "AZBot", "github": "https://github.com/AzielEliab/azbot", "download": "https://azbot-download-tracker.vibelock.workers.dev/download", "doi": null, "license": "Apache-2.0", "catalog": "https://aziel-runtime.vibelock.workers.dev/", "mesh": HOST + "/v1/mesh", "mesh_catalog": "https://aziel-runtime.vibelock.workers.dev/v1/mesh", "qns_cd_spec": QNS_CD_SPEC, "qns_cd": QNS_CD});
     }
     // /gitbaby-seo-routes
     return json({ error: "not found" }, 404);
