@@ -1,5 +1,8 @@
 import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { fileURLToPath } from "node:url";
 import worker from "../src/index.js";
 
 const origFetch = globalThis.fetch;
@@ -81,6 +84,32 @@ test("GET / increments views; GET /download increments downloads; GET /count ret
 
   const again = JSON.parse(await (await fetchPath(bindings, "/count")).text());
   assert.deepEqual(again, afterDl);
+});
+
+const BRANDMARK =
+  '<div class="brandrow"><img class="brandmark" src="/sigil.png" width="40" height="40" alt="" decoding="async"></div>';
+const OFFICIAL_SIGIL_SHA256 = "af095e8b0916a7262860a53619c7110f25539988806775b1c7bff8df7b0ee848";
+
+test("GET / rose-star brand mark is top-left, empty alt, no everblooming wording on the mark", async () => {
+  const home = await fetchPath(env(), "/");
+  assert.equal(home.status, 200);
+  const html = await home.text();
+  assert.ok(html.includes(BRANDMARK), "homepage must host the rose-star brandrow");
+  const mark = html.match(/<img class="brandmark"[^>]*>/);
+  assert.ok(mark, "brandmark img required");
+  assert.match(mark[0], /alt=""/);
+  assert.doesNotMatch(mark[0], /everblooming/i);
+  assert.doesNotMatch(html, /everblooming sigil/i);
+});
+
+test("public/sigil.png is the official ~75KB rose-star", () => {
+  const path = fileURLToPath(new URL("../public/sigil.png", import.meta.url));
+  const buf = readFileSync(path);
+  assert.equal(buf[0], 0x89);
+  assert.ok(buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])));
+  assert.ok(buf.length > 70000 && buf.length < 80000, `expected ~75KB, got ${buf.length}`);
+  const digest = createHash("sha256").update(buf).digest("hex");
+  assert.equal(digest, OFFICIAL_SIGIL_SHA256);
 });
 
 test("GET /v1/health does not increment views or downloads", async () => {
