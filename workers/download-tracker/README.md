@@ -17,3 +17,15 @@ Cross-map only. Not a new product. Not a Softwares-tab engine.
 Companion to QNM-BUILD-1.0. Local qnsd lives in [qnm-node](https://github.com/AzielEliab/qnm-node). Design: [QNS-CD-1.0](https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md). This Worker cites/proxies suite mesh. Photon QNS1 vias stay on local qnsd (`127.0.0.1`). Restriction walks next via class. `GET /v1/mesh` never enables. No Node Gate. No local qnsd HTTP on this public Worker.
 
 Author: Aziel Eliab. Apache-2.0.
+
+## Human / bot schema (`/stats` and `/count`)
+
+Additive dual-count (Whitestone canary). Classification lives in `src/classify.js`
+and response shaping in `src/stats-shape.js`.
+
+Invariant: `views === views_human + views_bot` and
+`downloads === downloads_human + downloads_bot`.
+
+Legacy strategy (b): existing KV totals are never reset. Pre-split remainder
+is shown as bot on read (`views_bot = views - views_human`). Author: Aziel Eliab only.
+
