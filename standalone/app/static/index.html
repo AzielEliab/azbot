@@ -178,12 +178,21 @@
       out.textContent = text;
     }
 
+    const METHOD = {
+      "image-reencoded-no-exif": "Image re-saved without embedded metadata.",
+      "pdf-info-cleared": "PDF info fields cleared.",
+      "office-core-props-blanked": "Office document properties blanked.",
+      "media-container-metadata-stripped": "Media container metadata stripped.",
+      "media-copy-only-ffmpeg-unavailable": "Copied. ffmpeg was not available, so container tags were left as they were.",
+      "copied-no-known-metadata-handler": "Copied. This file type has no metadata cleaner in this app."
+    };
+
     function linesFromResult(item) {
       if (item.clean) {
         return [
           item.original_name || "File",
           "Clean copy: " + item.clean,
-          "Method: " + (item.method || "done"),
+          METHOD[item.method] || item.method || "Done.",
           "Bytes: " + item.bytes,
           item.receipt ? "Receipt: " + item.receipt : ""
         ].filter(Boolean);

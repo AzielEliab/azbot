@@ -1,0 +1,98 @@
+===== -m azbot  exit=0 =====
+stdout:
+AZBot lists skill files on this computer and opens a local page for the catalog links.
+
+Skills found: 3
+
+Next:
+  azbot ui        Open http://127.0.0.1:8870/
+  azbot skills    List skill files
+  azbot doctor    Check the catalog
+  azbot --help    Show commands
+
+Author: Aziel Eliab
+
+===== -m azbot --help  exit=0 =====
+stdout:
+usage: azbot [--json] <command> [<args>]
+
+List skill files on this computer and open the local catalog page.
+
+positional arguments:
+  <command>
+    skill     Print the bundled skill, or run, import, or export one
+    skills    List skill files on this computer
+    doctor    Check whether the catalog answers
+    ui        Open the local page at 127.0.0.1:8870
+
+options:
+  -h, --help  show this help message and exit
+  --json      Print JSON for scripts
+  --version   show program's version number and exit
+
+Examples:
+  azbot
+  azbot ui
+  azbot skills
+  azbot doctor
+  azbot doctor --json
+
+More:
+  azbot skill run NAME
+  azbot skill import PATH
+  azbot skill export NAME --out FILE
+
+The local page is http://127.0.0.1:8870/
+Author: Aziel Eliab
+
+===== -m azbot bogus  exit=2 =====
+stderr:
+Unknown command "bogus".
+Try: azbot ui   or   azbot --help
+
+===== -m azbot skill run  exit=2 =====
+stderr:
+Missing skill name.
+Try: azbot skills
+
+===== -m azbot skill import /tmp/no-such-skill.md  exit=2 =====
+stderr:
+No file at /tmp/no-such-skill.md.
+Try: azbot skill import PATH
+
+===== -m azbot --version  exit=0 =====
+stdout:
+azbot 0.2.0
+
+===== -m azbot skills  exit=0 =====
+stdout:
+aziel-runtime   Call Aziel Eliab public engines through the aziel-runtime 1.4.0 engine-runtime (catalog + pull + proxy + session + in-process engines). Use when scoring, overlay, health, session exec, or any catalog tool is needed.
+slingshot-prep  Strip identifying embedded metadata from a copy of a file and write a SHA-256 receipt using standalone/app/sanitize.py. Not an upload proxy.
+azbot           Operator skill for AZbot standalone. Activates on AZbot, Slingshot Prep, ARK envelope, phoenix re-seal, metadata sanitation, receipts, Cursor SKILL.md files, ForgeReceipts, TemporalLock, AZ-OS, AZAI, Lumen, GodLock, research, code, documents, and general tasking. Applies identity and export constraints. Not Grok model weights.
+
+Next: azbot skill run NAME
+
+
+===== python3 -m azbot doctor  exit=0 =====
+stdout:
+Catalog: answered
+Health: HTTP 200
+Skills on this machine: 3
+OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json
+MCP: https://aziel-runtime.vibelock.workers.dev/mcp
+
+Next: azbot ui
+
+===== python3 -m azbot doctor --json  exit=0 =====
+stdout:
+
+{
+  "ok": true,
+  "catalog_health_status": 200,
+  "openapi": "https://aziel-runtime.vibelock.workers.dev/openapi.json",
+  "mcp": "https://aziel-runtime.vibelock.workers.dev/mcp",
+  "limitation": "AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime.",
+  "version": "0.2.0",
+  "skills": 3
+}
+
