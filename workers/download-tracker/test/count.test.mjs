@@ -112,6 +112,19 @@ test("public/sigil.png is the official ~75KB rose-star", () => {
   assert.equal(digest, OFFICIAL_SIGIL_SHA256);
 });
 
+test("GET / hero Download stays on /download and the page has focus, footer, and both themes", async () => {
+  const home = await fetchPath(env(), "/");
+  assert.equal(home.status, 200);
+  const html = await home.text();
+  assert.match(html, /id="downloadBtn"[^>]*href="\/download\?asset=azbot-0\.2\.0\.tar\.gz"/);
+  assert.match(html, />Download</);
+  assert.match(html, /<footer class="quiet">/);
+  assert.match(html, /:focus-visible/);
+  assert.match(html, /prefers-color-scheme:\s*light/);
+  assert.ok(html.indexOf("downloadBtn") < html.indexOf('id="meshStrip"'));
+  assert.equal(html.includes(BRANDMARK), true);
+});
+
 test("GET /v1/health does not increment views or downloads", async () => {
   const bindings = env();
   const health = await fetchPath(bindings, "/v1/health");

@@ -381,79 +381,182 @@ async function indexHtml(env) {
 </script>
 <!-- gitbaby-seo -->
 <style>
-  :root { color-scheme: dark; }
-  body { font: 16px/1.45 system-ui, sans-serif; max-width: 42rem; margin: 3rem auto; padding: 0 1.25rem 4rem; background: #0e1014; color: #e8eaef; }
-  .brandrow { display: flex; align-items: center; margin: 0 0 1rem; min-height: 48px; }
-  .brandmark { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; flex: 0 0 40px; box-shadow: 0 0 0 1px #0003, 0 0 0 1px #c9a227; }
-  h1 { font-size: 1.75rem; margin: 0 0 .35rem; }
-  .motto { color: #9aa3b2; margin: 0 0 1.5rem; }
-  .card { border: 1px solid #2a3140; border-radius: 12px; padding: 1.25rem 1.35rem; background: #151922; }
+  :root {
+    color-scheme: dark;
+    --bg: #0e1014;
+    --panel: #151922;
+    --ink: #f4f1ea;
+    --muted: #c5ceda;
+    --line: #2a3140;
+    --gold: #e6c35c;
+    --primary: #f4f1ea;
+    --primary-ink: #14120e;
+    --focus: #ffe08a;
+    --pass: #3dba7a;
+    --code-bg: #0e1014;
+    --link: #f0e2b6;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      color-scheme: light;
+      --bg: #fbf7f1;
+      --panel: #ffffff;
+      --ink: #1c1915;
+      --muted: #3f3a33;
+      --line: #d9d0c3;
+      --gold: #6b4e0a;
+      --primary: #1c1915;
+      --primary-ink: #fbf7f1;
+      --focus: #1c1915;
+      --pass: #3dba7a;
+      --code-bg: #f3eee6;
+      --link: #5c4308;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; max-width: 100%; background: var(--bg); color: var(--ink); }
+  body { font: 16px/1.5 system-ui, "Segoe UI", sans-serif; overflow-x: clip; }
+  img { max-width: 100%; }
+  a { color: var(--link); }
+  code, pre { font-family: ui-monospace, Menlo, Consolas, monospace; }
+  code { font-size: .92em; overflow-wrap: anywhere; }
+  .wrap { max-width: 58rem; margin: 0 auto; padding: 1.15rem 1rem 2.75rem; }
+  .brandrow { display: flex; align-items: center; margin: 0 0 .75rem; min-height: 48px; }
+  .brandmark { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; flex: 0 0 40px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--gold) 55%, transparent); }
+  h1 { font-size: 2rem; font-weight: 650; letter-spacing: .02em; line-height: 1.15; margin: 0 0 .2rem; }
+  h2 { font-size: 1.05rem; margin: 1.1rem 0 .4rem; }
+  .motto { color: var(--gold); font-style: italic; margin: 0 0 .7rem; font-size: 1.08rem; }
+  .lede { color: var(--muted); margin: 0 0 1rem; max-width: 46rem; }
+  .kicker { display: block; margin: 0 0 .45rem; font: .68rem/1.2 ui-monospace, Menlo, Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  a.btn.block.primary {
+    display: block; width: 100%; max-width: 36rem; margin: 0 0 .7rem;
+    padding: 1.05rem 1.2rem; border: 1px solid transparent; border-radius: 9px;
+    background: var(--primary); color: var(--primary-ink); text-align: center; text-decoration: none;
+    font: 700 1.25rem/1.1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: .03em;
+  }
+  a.btn.block.primary:hover { filter: brightness(1.06); }
+  .asset-note { color: var(--muted); font-size: .92rem; margin: 0 0 1rem; }
+  .features { margin: 0 0 1rem; padding: 0; list-style: none; max-width: 46rem; display: grid; gap: .45rem; }
+  .features li { margin: 0; padding-left: .9rem; position: relative; }
+  .features li::before { content: ""; position: absolute; left: 0; top: .55em; width: .35rem; height: .35rem; border-radius: 50%; background: var(--gold); }
+  .card, .cite {
+    border: 1px solid var(--line); border-radius: 14px; padding: 1.15rem 1.15rem 1.2rem;
+    background: var(--panel); margin: 0 0 1.1rem;
+  }
   .nums { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: 0 0 1rem; }
-  .count { font-size: 2.2rem; font-variant-numeric: tabular-nums; font-weight: 700; margin: 0; }
-  .count span { display: block; font-size: .95rem; font-weight: 500; color: #9aa3b2; }
-  .kid { font-size: 1.05rem; margin: 0 0 1rem; }
-  .btns { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 0 0 .85rem; }
-  @media (max-width: 520px) { .btns { grid-template-columns: 1fr; } }
-  a.btn, button.btn { display: block; width: 100%; box-sizing: border-box; text-align: center; font: inherit; font-size: 1.2rem; font-weight: 750; padding: 1rem 1.1rem; border-radius: 10px; border: 0; cursor: pointer; text-decoration: none; }
-  a.btn.primary { background: #e8eaef; color: #0e1014; }
-  button.btn.install { background: #c9a227; color: #14110a; }
-  button.btn.install.copied { background: #7dcf9a; color: #0e1014; }
-  .meta { margin-top: 1.1rem; color: #9aa3b2; font-size: .92rem; }
-  .meta a { color: #c9d4ff; }
-  .iso { margin-top: .85rem; font-size: .85rem; color: #7d8696; }
-  .banner { border: 1px solid #5c4a1a; background: #241c0d; color: #f0d78c; padding: .85rem 1rem; border-radius: 8px; margin: 0 0 1.2rem; font-size: .92rem; }
-  pre { background: #0e1014; padding: .75rem .9rem; overflow: auto; border-radius: 8px; font-size: .82rem; }
-  code { font-size: .88rem; }
-
-  .cite { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid #2a3140; }
-  .cite h2 { font-size: 1.05rem; margin: 0 0 .4rem; }
-  .cite p { color: #c5ccd8; font-size: .95rem; }
-  .cite a { color: #c9d4ff; }
-  #meshStrip { border: 1px solid #c9a227; border-radius: 12px; padding: .85rem 1rem; background: #151922; margin: 0 0 1.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1rem; font-size: .88rem; color: #9aa3b2; }
-  #meshStrip .live { color: #e8eaef; }
-  #meshStrip .live b { color: #c9a227; font-size: 1.35rem; margin-right: .35rem; }
-  #meshStrip .rollup b { color: #c9a227; }
-  #meshStrip button { font: 700 .78rem/1 ui-monospace, Menlo, Consolas, monospace; height: 2rem; padding: 0 .75rem; border-radius: 8px; background: #0e1014; color: #e8eaef; border: 1px solid #c9a227; cursor: pointer; }
-  #meshStrip button:hover { background: #241c0d; color: #c9a227; }
-  #meshStrip input { width: 10rem; padding: .4rem .55rem; border: 1px solid #c9a227; border-radius: 8px; background: #0e1014; color: #e8eaef; font: inherit; }
-  #meshProducts { flex-basis: 100%; margin: 0; }
+  .count { font-size: 2.1rem; font-variant-numeric: tabular-nums; font-weight: 700; margin: 0; color: var(--ink); }
+  .count span { display: block; font-size: .92rem; font-weight: 500; color: var(--muted); }
+  button.btn.install {
+    display: block; width: 100%; max-width: 36rem; box-sizing: border-box; text-align: center;
+    font: 700 .95rem/1.1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: .03em;
+    padding: .85rem 1rem; border-radius: 9px; cursor: pointer;
+    background: transparent; color: var(--ink); border: 1px solid var(--line);
+  }
+  button.btn.install:hover { border-color: var(--gold); color: var(--gold); }
+  button.btn.install.copied { background: var(--pass); color: #0e1014; border-color: transparent; }
+  pre {
+    background: var(--code-bg); color: var(--ink); padding: .75rem .9rem; margin: .85rem 0 0;
+    overflow-x: auto; max-width: 100%; border-radius: 8px; font-size: .82rem;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+  .meta, .iso { margin: .85rem 0 0; color: var(--muted); font-size: .92rem; }
+  .iso { font-size: .85rem; }
+  .cite h2 { margin-top: 0; }
+  .cite p { color: var(--ink); font-size: .95rem; }
+  footer.quiet { color: var(--muted); font-size: .9rem; padding: .35rem 0 0; }
+  footer.quiet p { margin: .35rem 0; }
+  footer.quiet a { color: var(--ink); }
+  a.skip { position: absolute; left: -999px; top: 0; }
+  a.skip:focus {
+    left: 1rem; top: 1rem; z-index: 5; background: var(--primary); color: var(--primary-ink);
+    padding: .4rem .7rem; text-decoration: none;
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--focus); outline-offset: 3px;
+  }
+  #meshStrip {
+    border: 1px solid var(--line); border-radius: 12px; padding: .85rem 1rem; background: var(--panel);
+    margin: 0 0 1.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1rem;
+    font-size: .88rem; color: var(--muted); max-width: 100%; min-width: 0;
+  }
+  #meshStrip .live { color: var(--ink); }
+  #meshStrip .live b { color: var(--gold); font-size: 1.35rem; margin-right: .35rem; }
+  #meshStrip .rollup b { color: var(--gold); }
+  #meshStrip button {
+    font: 700 .78rem/1 ui-monospace, Menlo, Consolas, monospace; min-height: 2rem; padding: 0 .75rem;
+    border-radius: 8px; background: var(--code-bg); color: var(--ink); border: 1px solid var(--gold); cursor: pointer;
+  }
+  #meshStrip button:hover { color: var(--gold); }
+  #meshStrip input {
+    width: min(16rem, 100%); max-width: 100%; padding: .4rem .55rem; border: 1px solid var(--gold);
+    border-radius: 8px; background: var(--code-bg); color: var(--ink); font: inherit;
+  }
+  .mesh-actions { display: flex; flex-wrap: wrap; gap: .45rem; width: 100%; }
+  #meshProducts { flex-basis: 100%; margin: 0; min-width: 0; overflow-wrap: anywhere; }
+  @media (min-width: 720px) {
+    .wrap { padding: 1.4rem 1.2rem 3rem; }
+  }
 </style>
 <body>
-  <div class="brandrow"><img class="brandmark" src="/sigil.png" width="40" height="40" alt="" decoding="async"></div>
-  <h1>AZBot</h1>
-  <p class="motto">A skill for ChatGPT, Grok, Venice, Claude, Cursor, Glama, Perplexity, Copilot, Gemini, Mistral, Meta AI, Apple Intelligence, Amazon Q, DuckAssist, You.com, Cohere, and other MCP/OpenAPI clients. Not a model. Jeeves is not sovereign. Author Aziel Eliab.</p>
-  <p class="banner">AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime. Author: Aziel Eliab.</p>
-  <div id="meshStrip" aria-label="Suite Live Nodes">
-    <div class="live"><b id="meshLiveCount">0</b> Live Nodes</div>
-    <div id="meshLine">Suite mesh: off (default). QNM-BUILD-1.0. Not an anonymity network.</div>
-    <div id="qnsCdLine">QNS-CD-1.0 companion to QNM-BUILD-1.0 · cites/proxies only · local qnsd not hosted</div>
-    <div class="rollup">live <b id="qnmLive">0</b> · locked <b id="qnmLocked">0</b> · isolated <b id="qnmIsolated">0</b></div>
-    <div>No Node Gate · No auto-heal · Aziel Eliab only</div>
-    <div>
-      <input id="meshBearer" type="text" maxlength="80" placeholder="bearer (required to enable)" aria-label="mesh bearer">
-      <button id="meshEnable" type="button" title="Enable suite mesh. Declared bearer required. Default off.">Enable</button>
-      <button id="meshDisable" type="button" title="Disable suite mesh (always allowed)">Disable</button>
-      <button id="meshJoin" type="button" title="Join as azbot. Refused while mesh is OFF. No auto-join.">Join</button>
-      <button id="meshLeave" type="button" title="Leave this node. No auto-heal.">Leave</button>
-    </div>
-    <div id="meshProducts">Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate · QNS-CD-1.0 companion</div>
+  <a class="skip" href="#downloadBtn">Skip to download</a>
+  <div class="wrap">
+    <header class="hero">
+      <div class="brandrow"><img class="brandmark" src="/sigil.png" width="40" height="40" alt="" decoding="async"></div>
+      <h1>AZBot</h1>
+      <p class="motto">A skill assistants import to call Aziel Eliab public engines.</p>
+      <p class="lede">Version 0.2.0 by Aziel Eliab. One click saves the skill pack from this Worker.</p>
+      <a class="btn block primary" id="downloadBtn" href="/download?asset=${DEFAULT_ASSET}" aria-describedby="downloadNote">Download</a>
+      <p class="asset-note" id="downloadNote">${n} downloads · ${DEFAULT_ASSET} · counted on this Worker for every branch and fork</p>
+      <ul class="features">
+        <li>On this computer, <code>azbot ui</code> opens http://127.0.0.1:8870.</li>
+        <li>Custom skills load from <code>SKILL.md</code> files on this computer.</li>
+        <li>OpenAPI and MCP stay on this Worker.</li>
+      </ul>
+      <p class="lede">Clients include ChatGPT, Grok, Venice, Claude, Cursor, Glama, Perplexity, Copilot, Gemini, Mistral, Meta AI, Apple Intelligence, Amazon Q, DuckAssist, You.com, Cohere, and other MCP or OpenAPI clients.</p>
+    </header>
+    <main>
+      <section class="card" id="install">
+        <h2><span class="kicker">Counted package</span>Views, downloads, and install</h2>
+        <div class="nums">
+          <p class="count">${v}<span>Views</span></p>
+          <p class="count">${n}<span>Downloads</span></p>
+        </div>
+        <p>One-click install copies a Terminal command. After it finishes, run <code>azbot ui</code> and open http://127.0.0.1:8870 on this computer.</p>
+        <button type="button" class="btn install" id="install-btn">One-click install</button>
+        <pre id="install-cmd">curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash</pre>
+        <p class="meta">The download count ticks on the Download click. The Worker serves the gzip (HTTP 200). Forks and branches that use this link are counted. ${DEFAULT_ASSET} — ${n} counted.</p>
+        <p class="iso">Isolated counter: Worker <code>azbot-download-tracker</code>, project <code>azbot</code>, KV <code>AZBOT_DOWNLOADS</code>. This counter stays on this Worker. /v1, /mcp, and /v1/mesh/* leave the download count unchanged.</p>
+        <p class="meta"><a href="/stats">JSON stats</a> · <a href="/openapi.json">OpenAPI</a> · <a href="/mcp">MCP</a> · <a href="/v1/mesh">/v1/mesh</a> · <a href="/v1/skill">Skill</a> · <a href="/ai">AI runtime</a> · <a href="${GITHUB_REPO}">GitHub</a> · <a href="${GITHUB_LATEST}">releases</a></p>
+        <h2>Per repo / branch / fork</h2>
+        <ul>${breakdown}</ul>
+      </section>
+      <div id="meshStrip" aria-label="Suite Live Nodes">
+        <div class="live"><b id="meshLiveCount">0</b> Live Nodes</div>
+        <div id="meshLine">Suite mesh: off (default). QNM-BUILD-1.0. Not an anonymity network.</div>
+        <div id="qnsCdLine">QNS-CD-1.0 companion to QNM-BUILD-1.0 · cites/proxies only · local qnsd not hosted</div>
+        <div class="rollup">live <b id="qnmLive">0</b> · locked <b id="qnmLocked">0</b> · isolated <b id="qnmIsolated">0</b></div>
+        <div>No Node Gate · No auto-heal · Aziel Eliab only</div>
+        <div class="mesh-actions">
+          <input id="meshBearer" type="text" maxlength="80" placeholder="bearer (required to enable)" aria-label="mesh bearer">
+          <button id="meshEnable" type="button" title="Enable suite mesh. Declared bearer required. Default off.">Enable</button>
+          <button id="meshDisable" type="button" title="Disable suite mesh (always allowed)">Disable</button>
+          <button id="meshJoin" type="button" title="Join as azbot. Refused while mesh is OFF. No auto-join.">Join</button>
+          <button id="meshLeave" type="button" title="Leave this node. No auto-heal.">Leave</button>
+        </div>
+        <div id="meshProducts">Catalog MCP mesh_* · FragGate slug=mesh · /v1/mesh/* PROXY · not AnonBroadcast · not AZMail ring · not a Node Gate · QNS-CD-1.0 companion</div>
+      </div>
+      <section class="cite" id="cite">
+        <h2>How to cite</h2>
+        <p>Aziel Eliab. AZBot. https://github.com/AzielEliab/azbot. https://azbot-download-tracker.vibelock.workers.dev.</p>
+        <p>QNS-CD-1.0 companion to QNM-BUILD-1.0. Cross-map to <a href="https://github.com/AzielEliab/qnm-node">qnm-node</a> and the <a href="https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md">aziel-runtime design</a>. Local qnsd stays with qnm-node. Author Aziel Eliab.</p>
+      </section>
+      <footer class="quiet">
+        <p>Apache-2.0 · Aziel Eliab · AZBot 0.2.0</p>
+        <p><a href="${GITHUB_REPO}">GitHub</a> · <a href="/openapi.json">OpenAPI</a> · <a href="/mcp">MCP</a> · <a href="/cite.json">Cite</a></p>
+      </footer>
+    </main>
   </div>
-  <div class="card">
-    <div class="nums">
-      <p class="count">${v}<span>Views</span></p>
-      <p class="count">${n}<span>Downloads</span></p>
-    </div>
-    <p class="kid"><strong>Two big buttons.</strong> Download saves the gzip (the Downloads number goes up). One-click install copies a Terminal command. After it finishes, type <code>azbot ui</code>.</p>
-    <div class="btns">
-      <a class="btn primary dl" href="/download?asset=${DEFAULT_ASSET}">Download</a>
-      <button type="button" class="btn install" id="install-btn">One-click install</button>
-    </div>
-    <pre id="install-cmd">curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash</pre>
-    <p class="kid">Then run: <code>azbot ui</code> and open http://127.0.0.1:8870 (this computer only).</p>
-    <p class="meta">The download count ticks on the Download click. The Worker serves the gzip (HTTP 200). No 302 to GitHub. Forks using this same link are counted automatically. ${DEFAULT_ASSET} — ${n} counted.</p>
-    <p class="iso">Isolated counter: Worker <code>azbot-download-tracker</code>, project <code>azbot</code>, KV <code>AZBOT_DOWNLOADS</code>. Not mixed with any other product. /v1, /mcp, and /v1/mesh/* do not increment downloads.</p>
-    
-    <p class="meta"><a href="/stats">JSON stats</a> · <a href="/openapi.json">OpenAPI</a> · <a href="/mcp">MCP</a> · <a href="/v1/mesh">/v1/mesh</a> · <a href="/v1/skill">Skill</a> · <a href="/ai">AI runtime</a> · <a href="${GITHUB_REPO}">GitHub</a> · <a href="${GITHUB_LATEST}">releases</a></p>
+
     <script>
       (function () {
         var cmd = "curl -fsSL https://azbot-download-tracker.vibelock.workers.dev/install.sh | bash";
@@ -585,16 +688,6 @@ async function indexHtml(env) {
         document.addEventListener("visibilitychange", function () { if (!document.hidden) refreshMesh(); });
       })();
     </script>
-    <h2>Per repo / branch / fork</h2>
-    <ul>${breakdown}</ul>
-  </div>
-
-<section class="cite" id="cite">
-  <h2>How to cite</h2>
-  <p>Aziel Eliab. AZBot. https://github.com/AzielEliab/azbot. https://azbot-download-tracker.vibelock.workers.dev.</p>
-  <p>QNS-CD-1.0 companion to QNM-BUILD-1.0. Cross-map to <a href="https://github.com/AzielEliab/qnm-node">qnm-node</a> + <a href="https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md">aziel-runtime design</a>. Not a new product. Local qnsd is not hosted here. Author Aziel Eliab.</p>
-  <p><a href="https://aziel-runtime.vibelock.workers.dev/">Catalog</a> · <a href="https://github.com/AzielEliab/azbot">GitHub</a> · <a href="https://azbot-download-tracker.vibelock.workers.dev/download">Download</a> · <a href="https://azbot-download-tracker.vibelock.workers.dev/cite.json">cite.json</a></p>
-</section>
 <!-- /gitbaby-seo -->
 </body>
 </html>`;
