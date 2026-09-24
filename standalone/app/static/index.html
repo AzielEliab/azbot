@@ -1,128 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AZbot Local</title>
   <style>
-    :root { color-scheme: dark; }
-    body { font: 15px/1.4 ui-sans-serif, system-ui, sans-serif; margin: 0; background: #0b0d10; color: #e8edf2; }
-    main { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
-    h1 { font-size: 22px; font-weight: 650; letter-spacing: .02em; margin: 0 0 8px; }
-    .sub { color: #9aa7b4; margin-bottom: 28px; }
-    .card { border: 1px solid #24303a; background: #12161b; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
-    label { display: block; margin-bottom: 10px; color: #c5d0d8; }
-    input[type=file], input[type=password] { width: 100%; box-sizing: border-box; background: #0b0d10; color: #e8edf2; border: 1px solid #24303a; border-radius: 8px; padding: 8px; }
-    button { background: #e8edf2; color: #0b0d10; border: 0; border-radius: 8px; padding: 10px 16px; font-weight: 650; cursor: pointer; margin-right: 8px; margin-top: 6px; }
-    button:disabled { opacity: .5; cursor: wait; }
-    pre { white-space: pre-wrap; word-break: break-word; background: #0b0d10; padding: 12px; border-radius: 8px; font-size: 12px; }
-    .warn { color: #d2b48c; }
-    ul.skill-list { list-style: none; padding: 0; margin: 10px 0; }
-    ul.skill-list li { border: 1px solid #24303a; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; cursor: pointer; }
-    ul.skill-list li.active { border-color: #e8edf2; }
-    .muted { color: #9aa7b4; }
+    :root {
+      color-scheme: light dark;
+      --gold: #c9a227;
+      --bg: #f7f4ee;
+      --fg: #1c1914;
+      --muted: #5c564c;
+      --surface: #fffdf8;
+      --line: #e4dcc8;
+      --primary-bg: #1c1914;
+      --primary-fg: #f7f4ee;
+      --hover: #efeae0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #12110e;
+        --fg: #f4efe6;
+        --muted: #c8bfb0;
+        --surface: #1c1a16;
+        --line: #3d362c;
+        --primary-bg: #f4efe6;
+        --primary-fg: #1c1914;
+        --hover: #2a261f;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--fg); }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    main { max-width: 40rem; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 1.75rem; }
+    .brand { font-weight: 650; }
+    h1 { font-size: 1.75rem; line-height: 1.2; font-weight: 650; margin: 0 0 0.5rem; }
+    h2 { font-size: 1.05rem; margin: 1.1rem 0 0.35rem; }
+    .lede { margin: 0 0 1.25rem; }
+    label { display: block; margin: 0.75rem 0 0.35rem; }
+    input[type="file"], input[type="password"] {
+      display: block;
+      width: 100%;
+      margin-top: 0.35rem;
+      background: var(--bg);
+      color: var(--fg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0.55rem 0.7rem;
+      font: inherit;
+    }
+    button, summary { font: inherit; cursor: pointer; }
+    button { min-height: 44px; border-radius: 8px; padding: 0.6rem 1rem; }
+    .primary { background: var(--primary-bg); color: var(--primary-fg); border: 1px solid var(--primary-bg); font-weight: 650; }
+    .ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.75rem; }
+    .primary:hover { filter: brightness(1.08); }
+    .ghost:hover { background: var(--hover); }
+    :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+    .help, footer { color: var(--muted); }
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 0.25rem 1rem 1rem;
+      margin-top: 1.25rem;
+    }
+    summary { font-weight: 650; padding: 0.75rem 0; min-height: 44px; }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin: 0.35rem 0 0;
+      font-size: 0.9rem;
+    }
+    ul.skill-list { list-style: none; padding: 0; margin: 0.5rem 0; }
+    ul.skill-list button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      color: inherit;
+      border: 1px solid var(--line);
+      margin-bottom: 0.4rem;
+    }
+    ul.skill-list button.active { border-color: var(--gold); }
+    footer { margin-top: 2rem; font-size: 0.9rem; }
+    @media (max-width: 480px) {
+      main { padding: 1rem 1rem 2.5rem; }
+      h1 { font-size: 1.5rem; }
+      .actions { flex-direction: column; }
+      .actions button, #prep button { width: 100%; }
+    }
   </style>
 </head>
 <body>
   <main>
-    <h1>AZbot Local 0.2.0</h1>
-    <p class="sub">Operator shell on 127.0.0.1. Does not upload. Does not hide network origin. Not Grok weights.</p>
+    <header class="top">
+      <div class="brand">AZbot Local</div>
+      <span>127.0.0.1</span>
+    </header>
+    <h1>Prep a copy</h1>
+    <p class="lede">Strip identifying embedded metadata from a copy of your file. The original stays where it is.</p>
 
-    <div class="card">
-      <p><strong>Slingshot Prep</strong> — strip identifying embedded metadata from a copy.</p>
-      <form id="prep">
-        <label>Files<input type="file" name="file" multiple required /></label>
-        <button type="submit">Prep copies</button>
-      </form>
-    </div>
+    <form id="prep">
+      <label>Files
+        <input type="file" name="file" multiple required>
+      </label>
+      <button type="submit" class="primary">Prep copies</button>
+    </form>
+    <p class="help">The cleaned copy and its receipt are written to the out folder next to this app.</p>
 
-    <div class="card">
-      <p><strong>ARK seal</strong> — encrypt raw file and metadata into a .ark envelope. Outer header has algorithm fields only. Name, size, hash live inside encrypted meta.</p>
-      <p class="warn">Phoenix is local authorized view. It re-seals gen+1 on this machine. It is not a remote payload and it does not make an upload untraceable.</p>
+    <section class="panel" aria-live="polite">
+      <h2>Result</h2>
+      <pre id="out">Ready. Choose files, then Prep copies.</pre>
+    </section>
+
+    <details class="panel">
+      <summary>Advanced</summary>
+
+      <h2>ARK seal</h2>
+      <p class="help">Seal encrypts the file and its name into a .ark envelope on this computer. Phoenix opens that envelope, writes an extracted copy, and re-seals it here at the next generation.</p>
       <form id="ark">
-        <label>File<input type="file" name="file" required /></label>
-        <label>Passphrase<input type="password" name="pass" required autocomplete="off" /></label>
-        <button type="submit" data-path="/ark/seal">Seal</button>
-        <button type="submit" data-path="/ark/phoenix">Phoenix view</button>
+        <label>File
+          <input type="file" name="file" required>
+        </label>
+        <label>Passphrase
+          <input type="password" name="pass" required autocomplete="off">
+        </label>
+        <div class="actions">
+          <button type="submit" class="primary" data-path="/ark/seal">Seal</button>
+          <button type="submit" class="ghost" data-path="/ark/phoenix">Phoenix view</button>
+        </div>
       </form>
-    </div>
 
-    <div class="card" id="skills-panel">
-      <p><strong>Skills</strong> — custom skills and Cursor SKILL.md files. These are local instructions, not Grok weights.</p>
-      <label>Add skill<input type="file" id="skill-file" accept=".md,.markdown,text/markdown" /></label>
-      <button type="button" id="import-skill">Add skill</button>
-      <button type="button" id="export-skill">Export skill</button>
-      <ul id="skill-list" class="skill-list"></ul>
-      <p id="skill-desc" class="muted">Pick a skill to see what it does.</p>
-    </div>
+      <section id="skills-panel">
+        <h2>Skills</h2>
+        <p class="help">Skill files on this computer.</p>
+        <label>SKILL.md file
+          <input type="file" id="skill-file" accept=".md,.markdown,text/markdown">
+        </label>
+        <div class="actions">
+          <button type="button" id="import-skill" class="ghost">Add skill</button>
+          <button type="button" id="export-skill" class="ghost">Export skill</button>
+        </div>
+        <ul id="skill-list" class="skill-list"></ul>
+        <p id="skill-desc" class="help">Pick a skill to read its description.</p>
+      </section>
+    </details>
 
-    <div class="card">
-      <div>Result</div>
-      <pre id="out">idle</pre>
-    </div>
+    <details class="panel">
+      <summary>About</summary>
+      <p>AZbot Local 0.2.0. Author Aziel Eliab. This page binds to 127.0.0.1:7747 and does not upload files.</p>
+      <p>Prep removes identifying embedded metadata from a copy. It does not rewrite content timestamps to invent an origin.</p>
+      <p>Service → Clarity → Peace.</p>
+    </details>
+
+    <footer>
+      <p>Service → Clarity → Peace.</p>
+      <p>Aziel Eliab</p>
+    </footer>
   </main>
   <script>
-    async function post(path, form) {
-      const fd = new FormData(form);
-      const res = await fetch(path, { method: 'POST', body: fd });
-      return await res.text();
-    }
-    const out = document.getElementById('out');
-    const descEl = document.getElementById('skill-desc');
-    const listEl = document.getElementById('skill-list');
+    const out = document.getElementById("out");
+    const descEl = document.getElementById("skill-desc");
+    const listEl = document.getElementById("skill-list");
     let selected = null;
 
-    document.getElementById('prep').addEventListener('submit', async (e) => {
+    function showRaw(text) {
+      out.textContent = text;
+    }
+
+    function linesFromResult(item) {
+      if (item.clean) {
+        return [
+          item.original_name || "File",
+          "Clean copy: " + item.clean,
+          "Method: " + (item.method || "done"),
+          "Bytes: " + item.bytes,
+          item.receipt ? "Receipt: " + item.receipt : ""
+        ].filter(Boolean);
+      }
+      if (item.ark && item.extracted) {
+        return [
+          "Opened " + (item.name || "the envelope") + ".",
+          "Envelope: " + item.ark,
+          "Generation: " + item.gen,
+          "Extracted copy: " + item.extracted
+        ];
+      }
+      if (item.ark) {
+        return [
+          "Sealed " + (item.name || "the file") + ".",
+          "Envelope: " + item.ark,
+          "Generation: " + item.gen,
+          "Bytes: " + item.bytes
+        ];
+      }
+      return [JSON.stringify(item)];
+    }
+
+    function showPayload(raw) {
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch (err) {
+        showRaw(raw);
+        return;
+      }
+      if (data.ok === false || data.error) {
+        const reason = data.error || "The request did not finish.";
+        let next = "Next: check the file and try again.";
+        if (reason === "pass required") next = "Next: enter a passphrase, then try again.";
+        if (String(reason).indexOf("ARK1") !== -1) next = "Next: choose a .ark file, then Phoenix view.";
+        if (reason === "file required" || reason === "SKILL.md file required") next = "Next: choose a SKILL.md file, then Add skill.";
+        showRaw(reason + "\n" + next);
+        return;
+      }
+      if (data.ok && data.name && data.path && !data.results) {
+        showRaw("Added " + data.name + ".\nSaved to " + data.path + ".");
+        return;
+      }
+      if (Array.isArray(data.results)) {
+        if (!data.results.length) {
+          showRaw("No file was sent.\nNext: choose a file, then try again.");
+          return;
+        }
+        const blocks = data.results.map((item) => linesFromResult(item).join("\n"));
+        showRaw(blocks.join("\n\n"));
+        return;
+      }
+      showRaw(raw);
+    }
+
+    async function post(path, form) {
+      const res = await fetch(path, { method: "POST", body: new FormData(form) });
+      showPayload(await res.text());
+    }
+
+    document.getElementById("prep").addEventListener("submit", async (e) => {
       e.preventDefault();
-      out.textContent = 'working';
-      out.textContent = await post('/prep', e.target);
+      showRaw("Working on the copy.");
+      await post("/prep", e.target);
     });
-    document.getElementById('ark').addEventListener('submit', async (e) => {
+    document.getElementById("ark").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const path = e.submitter && e.submitter.dataset.path || '/ark/seal';
-      out.textContent = 'working';
-      out.textContent = await post(path, e.target);
+      const path = (e.submitter && e.submitter.dataset.path) || "/ark/seal";
+      showRaw(path === "/ark/phoenix" ? "Opening the envelope." : "Sealing the file.");
+      await post(path, e.target);
     });
 
     async function loadSkills() {
-      const skills = await fetch('/api/skills').then((r) => r.json());
-      listEl.innerHTML = '';
+      const skills = await fetch("/api/skills").then((r) => r.json());
+      listEl.innerHTML = "";
+      if (!skills.length) {
+        descEl.textContent = "No skill files found yet. Choose a SKILL.md file, then Add skill.";
+        return;
+      }
       skills.forEach((s) => {
-        const li = document.createElement('li');
-        li.textContent = s.name;
-        li.title = s.description;
-        li.dataset.name = s.name;
-        li.onclick = () => {
+        const li = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = s.name;
+        button.dataset.name = s.name;
+        button.addEventListener("click", () => {
           selected = s;
-          [...listEl.children].forEach((el) => el.classList.toggle('active', el.dataset.name === s.name));
-          descEl.textContent = s.description || 'No description.';
-        };
+          listEl.querySelectorAll("button").forEach((el) => {
+            const on = el.dataset.name === s.name;
+            el.classList.toggle("active", on);
+            el.setAttribute("aria-pressed", on ? "true" : "false");
+          });
+          descEl.textContent = s.description || "No description on this skill.";
+        });
+        li.appendChild(button);
         listEl.appendChild(li);
       });
     }
-    document.getElementById('import-skill').onclick = async () => {
-      const input = document.getElementById('skill-file');
+
+    document.getElementById("import-skill").addEventListener("click", async () => {
+      const input = document.getElementById("skill-file");
       if (!input.files || !input.files[0]) {
-        out.textContent = 'Choose a SKILL.md file first.';
+        showRaw("Choose a SKILL.md file, then Add skill.");
         return;
       }
       const fd = new FormData();
-      fd.append('file', input.files[0], input.files[0].name);
-      const res = await fetch('/api/skills/import', { method: 'POST', body: fd });
-      out.textContent = await res.text();
+      fd.append("file", input.files[0], input.files[0].name);
+      const res = await fetch("/api/skills/import", { method: "POST", body: fd });
+      showPayload(await res.text());
       await loadSkills();
-    };
-    document.getElementById('export-skill').onclick = () => {
+    });
+    document.getElementById("export-skill").addEventListener("click", () => {
       if (!selected) {
-        out.textContent = 'Pick a skill, then Export skill.';
+        showRaw("Pick a skill, then Export skill.");
         return;
       }
-      const a = document.createElement('a');
-      a.href = '/api/skills/' + encodeURIComponent(selected.name) + '/export';
-      a.download = (selected.slug || selected.name) + '.md';
+      const a = document.createElement("a");
+      a.href = "/api/skills/" + encodeURIComponent(selected.name) + "/export";
+      a.download = (selected.slug || selected.name) + ".md";
       a.click();
-      out.textContent = 'Exported ' + selected.name;
-    };
+      showRaw("Exported " + selected.name + ".");
+    });
     loadSkills().catch((err) => { descEl.textContent = String(err); });
   </script>
 </body>

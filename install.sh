@@ -26,7 +26,7 @@ python -m pip install -U pip
 python -m pip install -e .
 
 echo
-echo "Installed AZBot."
-echo "Run:  azbot ui"
-echo "Then open http://127.0.0.1:8870  (loopback only)"
+echo "AZBot is installed."
+echo "Next: azbot ui"
+echo "Open http://127.0.0.1:8870/"
 echo "Author: Aziel Eliab."

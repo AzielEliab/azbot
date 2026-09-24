@@ -9,7 +9,7 @@ from importlib.resources import files
 from pathlib import Path
 from urllib.parse import unquote, urlparse
 
-from azbot import LIMITATION, __version__, skill_text
+from azbot import LIMITATION, MCP, OPENAPI, __version__, skill_text
 from azbot.skills_loader import get_skill, import_skill, skills_as_dicts
 
 LOOPBACK = frozenset({"127.0.0.1", "localhost", "::1"})
@@ -33,9 +33,30 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _wants_json(self) -> bool:
+        accept = self.headers.get("Accept", "")
+        if "text/html" in accept:
+            return False
+        return "application/json" in accept
+
+    def _home_json(self) -> bytes:
+        host, port = self.server.server_address[:2]
+        payload = {
+            "ok": True,
+            "version": __version__,
+            "ui": f"http://{host}:{port}/",
+            "openapi": OPENAPI,
+            "mcp": MCP,
+            "skills": len(skills_as_dicts()),
+        }
+        return json.dumps(payload, indent=2).encode("utf-8")
+
     def do_GET(self) -> None:  # noqa: N802
         path = urlparse(self.path).path
         if path in {"/", "/index.html"}:
+            if path == "/" and self._wants_json():
+                self._send(200, self._home_json(), "application/json; charset=utf-8")
+                return
             self._send(200, (WEB / "index.html").read_bytes(), "text/html; charset=utf-8")
             return
         if path == "/style.css":
@@ -152,13 +173,12 @@ def _parse_multipart(raw: bytes, boundary: bytes | None) -> tuple[list[tuple[str
 
 def serve(host: str = "127.0.0.1", port: int = 8870) -> None:
     if host not in LOOPBACK:
-        raise ValueError("AZBot UI binds loopback only (127.0.0.1)")
+        raise ValueError("AZBot UI binds to 127.0.0.1 only. Next: start it with azbot ui.")
     httpd = ThreadingHTTPServer((host, port), Handler)
-    print(f"AZBot UI http://{host}:{port} (loopback only)")
-    print(LIMITATION)
+    print(f"Open http://{host}:{port}/")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\nstopped")
+        print("\nStopped.")
     finally:
         httpd.server_close()

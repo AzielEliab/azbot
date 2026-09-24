@@ -3,113 +3,75 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AZBot — skill</title>
+  <title>AZBot</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <header>
-    <div class="tag">AZBot · v0.2.0 · 127.0.0.1:8870</div>
-    <h1>One skill for every Aziel Eliab engine</h1>
-    <p class="lede">Paste the OpenAPI or MCP URL into ChatGPT, Grok, Venice, Claude, Cursor, Glama, Perplexity, Copilot, Gemini, or any other MCP/OpenAPI-capable assistant. AZBot is a skill, not a model. Not Grok weights. Jeeves is not sovereign.</p>
-  </header>
-  <div class="banner" role="note">Not a foundation model. Not a kernel. Not a VPN. Not an upload proxy. Not untraceable origin. Call the catalog. Do not invent scores.</div>
-  <section class="actions">
-    <button type="button" id="copy-oa" class="action">Copy OpenAPI</button>
-    <button type="button" id="copy-mcp" class="action">Copy MCP</button>
-    <button type="button" id="export" class="action">Export skill</button>
-  </section>
-  <p id="status" class="muted">No copy yet.</p>
-  <p><a href="https://aziel-runtime.vibelock.workers.dev/">Open the live catalog</a></p>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">AZBot</div>
+      <a href="https://aziel-runtime.vibelock.workers.dev/">Catalog</a>
+    </header>
 
-  <section class="card" id="skills-panel">
-    <h2>Skills</h2>
-    <p class="muted">Custom skills and Cursor SKILL.md files. Add a skill file. Export a skill file. These are local instructions, not Grok weights.</p>
-    <label class="file-label">Add skill
-      <input type="file" id="skill-file" accept=".md,.markdown,text/markdown" />
-    </label>
-    <div class="actions">
-      <button type="button" id="import-skill" class="action">Add skill</button>
-      <button type="button" id="export-skill" class="action">Export skill</button>
-    </div>
-    <ul id="skill-list" class="skill-list"></ul>
-    <p id="skill-desc" class="muted">Pick a skill to see what it does.</p>
-  </section>
+    <main>
+      <h1>Copy a catalog link</h1>
+      <p class="lede">AZBot lists skill files on this computer and gives you the catalog links an assistant can import.</p>
 
-  <pre id="skill"></pre>
-  
-<section class="card" id="aziel-json-io">
-  <h2>Import / Export JSON</h2>
-  <p class="help">Tap Import JSON file to pick a .json. Export JSON saves the current session locally. Nothing is uploaded.</p>
-  <input id="aziel-import-json" type="file" accept="application/json,.json">
-  <p>
-    <button type="button" id="aziel-import-json-btn">Import JSON file</button>
-    <button type="button" id="aziel-export-json-btn">Export JSON</button>
-  </p>
-  <p class="help" id="aziel-json-status"></p>
-</section>
+      <div class="actions">
+        <button type="button" id="copy-oa" class="primary">Copy OpenAPI</button>
+        <button type="button" id="copy-mcp" class="ghost">Copy MCP</button>
+      </div>
+      <p id="status" class="status" role="status">Ready. Choose Copy OpenAPI.</p>
+      <p class="url" id="oa-url">https://aziel-runtime.vibelock.workers.dev/openapi.json</p>
+      <p class="url" id="mcp-url">https://aziel-runtime.vibelock.workers.dev/mcp</p>
 
-<footer>
-    <p><strong>Peace → Clarity → Service.</strong></p>
-    <p>Apache-2.0 · Aziel Eliab · 2026 · Forks welcome and always allowed.</p>
-  </footer>
+      <details class="panel">
+        <summary>Advanced</summary>
+        <section id="skills-panel">
+          <h2>Skills</h2>
+          <p class="help">Skill files on this computer. Add one, or export the one you pick.</p>
+          <ul id="skill-list" class="skill-list"></ul>
+          <p id="skill-desc" class="help">Pick a skill to read its description.</p>
+          <label class="file-label" for="skill-file">SKILL.md file
+            <input type="file" id="skill-file" accept=".md,.markdown,text/markdown">
+          </label>
+          <div class="actions">
+            <button type="button" id="import-skill" class="ghost">Add skill</button>
+            <button type="button" id="export-skill" class="ghost">Export skill</button>
+            <button type="button" id="export" class="ghost">Export bundled skill</button>
+          </div>
+        </section>
+
+        <section id="aziel-json-io">
+          <h2>Session file</h2>
+          <p class="help">Import JSON reads a file you pick. Export JSON saves this page’s fields on this computer. Nothing is uploaded.</p>
+          <input id="aziel-import-json" type="file" accept="application/json,.json">
+          <div class="actions">
+            <button type="button" id="aziel-import-json-btn" class="ghost">Import JSON file</button>
+            <button type="button" id="aziel-export-json-btn" class="ghost">Export JSON</button>
+          </div>
+          <p class="help" id="aziel-json-status" role="status"></p>
+        </section>
+
+        <section>
+          <h2>Bundled skill</h2>
+          <pre id="skill"></pre>
+        </section>
+      </details>
+
+      <details class="panel">
+        <summary>About</summary>
+        <p>This page is served on 127.0.0.1:8870. Version 0.2.0. Author Aziel Eliab.</p>
+        <p>AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime.</p>
+        <p>Service → Clarity → Peace.</p>
+      </details>
+    </main>
+
+    <footer>
+      <p>Service → Clarity → Peace.</p>
+      <p>Aziel Eliab · Apache-2.0 · 2026</p>
+    </footer>
+  </div>
   <script src="/app.js"></script>
-
-<script>
-(function(){
-  var file = document.getElementById("aziel-import-json");
-  var imp = document.getElementById("aziel-import-json-btn");
-  var exp = document.getElementById("aziel-export-json-btn");
-  var status = document.getElementById("aziel-json-status");
-  if (!file || !imp || !exp) return;
-  function say(m){ if (status) status.textContent = m; }
-  function collect(){
-    var data = { product: document.title || "", exported_at: new Date().toISOString(), author: "Aziel Eliab" };
-    document.querySelectorAll("input, select, textarea").forEach(function(el){
-      if (!el.id || el.type === "file" || el.type === "password") return;
-      data[el.id] = el.type === "checkbox" ? el.checked : el.value;
-    });
-    if (window.__azielLastJson && typeof window.__azielLastJson === "object") {
-      data.last = window.__azielLastJson;
-    }
-    return data;
-  }
-  function apply(obj){
-    if (!obj || typeof obj !== "object") return;
-    window.__azielLastJson = obj;
-    Object.keys(obj).forEach(function(k){
-      if (k === "last" || k === "product" || k === "exported_at" || k === "author") return;
-      var el = document.getElementById(k);
-      if (!el || el.type === "file" || el.type === "password") return;
-      if (el.type === "checkbox") el.checked = !!obj[k];
-      else if ("value" in el) el.value = obj[k];
-    });
-    var ta = document.querySelector("textarea");
-    if (ta && obj && !obj[ta.id] && typeof obj === "object") {
-      try { if (!ta.value) ta.value = JSON.stringify(obj, null, 2); } catch (e) {}
-    }
-  }
-  imp.addEventListener("click", function(){ file.click(); });
-  file.addEventListener("change", function(){
-    var f = file.files && file.files[0];
-    if (!f) return;
-    var r = new FileReader();
-    r.onload = function(){
-      try { apply(JSON.parse(String(r.result || "{}"))); say("Imported " + f.name); }
-      catch (e) { say("Invalid JSON"); }
-    };
-    r.readAsText(f);
-  });
-  exp.addEventListener("click", function(){
-    var blob = new Blob([JSON.stringify(collect(), null, 2)], {type: "application/json"});
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "session.json";
-    a.click();
-    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 800);
-    say("Exported JSON");
-  });
-})();
-</script>
-
 </body>
 </html>
