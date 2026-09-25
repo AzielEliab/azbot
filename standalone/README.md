@@ -1,34 +1,38 @@
-# AZbot Local 0.2.0
+# AZbot Local
 
-Local operator shell. Binds to 127.0.0.1 only.
+Local page for prep, ARK seal, and skill files. It binds to 127.0.0.1.
 
-## Run
+**Author:** Aziel Eliab  
+**Version:** 0.2.0
 
-Linux / macOS:
+## Start
 
-    chmod +x launch.sh
-    ./launch.sh
+1. From this folder:
 
-Windows:
+```bash
+chmod +x launch.sh
+./launch.sh
+```
 
-    launch.bat
+Windows: `launch.bat`
 
-Requires Python 3. Pillow and pypdf for image/PDF prep. ffmpeg optional for media container tags. cryptography for ARK seal.
+2. Open http://127.0.0.1:7747/
 
-## What this is
+3. Choose **Prep copies**.
 
-- Slingshot Prep: copy a file, strip identifying embedded metadata, write a SHA-256 receipt.
-- ARK1: encrypt body + metadata. Phoenix re-seals gen+1 on authorized local view.
-- Skills panel: list, Add skill, Export skill. Discovers custom `skills/` and Cursor `SKILL.md` files.
-- Local web UI at http://127.0.0.1:7747
-- CLI from repo root: `azbot skills` / `azbot skill run NAME`
+Python 3. Pillow and pypdf prepare images and PDFs. ffmpeg is optional for media container tags. cryptography is used for ARK seal.
 
-## What this is not
+## On the page
 
-- Not Grok model weights. In-session AZbot on grok.com has full Grok tools. This download is the local hygiene shell plus a skill runner.
-- Not an upload proxy.
-- Not an untraceable-origin system. Network origin of anything you later post is still your channel.
+- **Prep copies** writes a cleaned copy and a SHA-256 receipt. The original file stays in place.
+- **Advanced** holds ARK seal, Phoenix view, and skill files.
 
-## Identity lock
+From the repo root, `azbot skills` and `azbot skill run NAME` print skill files in the terminal.
 
-Public identity on this package is Aziel Eliab. No operator legal name, home, or county in this tree.
+## Notes
+
+Public identity on this package is Aziel Eliab.
+
+Prep strips identifying embedded metadata from a copy. It does not rewrite content timestamps to invent an origin. This server does not upload the file.
+
+Service → Clarity → Peace.

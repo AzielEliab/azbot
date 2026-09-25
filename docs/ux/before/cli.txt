@@ -1,0 +1,40 @@
+===== azbot (no args) =====
+stdout:
+EXIT:2
+stderr:
+usage: azbot [-h] [--version] {skill,skills,doctor,ui} ...
+azbot: error: the following arguments are required: cmd
+
+===== azbot --help =====
+stdout:
+usage: azbot [-h] [--version] {skill,skills,doctor,ui} ...
+
+AZBot skill runner. Not a model and not Grok weights. Prints skills, checks
+the catalog, or serves a local UI.
+
+positional arguments:
+  {skill,skills,doctor,ui}
+    skill               Print catalog SKILL.md, or run/import/export a skill
+    skills              List discovered skills (name + description)
+    doctor              Ping aziel-runtime /v1/health
+    ui                  Loopback UI at 127.0.0.1:8870
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+EXIT:0
+stderr:
+
+===== azbot bogus =====
+stdout:
+EXIT:2
+stderr:
+usage: azbot [-h] [--version] {skill,skills,doctor,ui} ...
+azbot: error: argument cmd: invalid choice: 'bogus' (choose from 'skill', 'skills', 'doctor', 'ui')
+
+===== azbot skill run =====
+stdout:
+EXIT:2
+stderr:
+usage: azbot skill run [-h] name
+azbot skill run: error: the following arguments are required: name

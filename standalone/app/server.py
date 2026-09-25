@@ -50,6 +50,17 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         path = urlparse(self.path).path
         if path in ("/", "/index.html"):
+            if path == "/" and _wants_json(self.headers.get("Accept", "")):
+                payload = {
+                    "ok": True,
+                    "name": "azbot-local",
+                    "version": "0.2.0",
+                    "bind": "127.0.0.1",
+                    "port": 7747,
+                    "ui": "http://127.0.0.1:7747/",
+                }
+                self._send(200, json.dumps(payload, indent=2).encode(), "application/json; charset=utf-8")
+                return
             data = (STATIC / "index.html").read_bytes()
             self._send(200, data, "text/html; charset=utf-8")
             return
@@ -250,16 +261,20 @@ def _handle_ark_phoenix(files: list[tuple[str, bytes]], fields: dict[str, str]) 
     return {"results": results}
 
 
+def _wants_json(accept: str) -> bool:
+    if "text/html" in accept:
+        return False
+    return "application/json" in accept
+
+
 def main() -> None:
     host, port = "127.0.0.1", 7747
     httpd = ThreadingHTTPServer((host, port), Handler)
-    print(f"AZbot local shell  http://{host}:{port}")
-    print("Slingshot Prep is local-only. This process does not upload.")
-    print("Not Grok weights. Not an upload proxy. Not untraceable origin.")
+    print(f"Open http://{host}:{port}/")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\nstop")
+        print("\nStopped.")
 
 
 if __name__ == "__main__":
