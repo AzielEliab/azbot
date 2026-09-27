@@ -370,7 +370,7 @@ Timezone-aware Temporal Neutral Window (08:30–10:30 local). Advisory hygiene. 
 ```bash
 curl -s -A 'Mozilla/5.0' https://chronolock-download-tracker.vibelock.workers.dev/v1/health
 curl -s -A 'Mozilla/5.0' -X POST https://aziel-runtime.vibelock.workers.dev/p/chronolock/advisory \
-  -H 'content-type: application/json' -d '{"geo":"Indiana","language":"English"}'
+  -H 'content-type: application/json' -d '{"geo":"United States","language":"English"}'
 ```
 
 ## CodeLock toolkit (0.1.0)
@@ -642,7 +642,7 @@ Action-based immutable gear-click timeline. Time only locks forward. Distinct fr
 ```bash
 curl -s -A 'Mozilla/5.0' https://staticclock-download-tracker.vibelock.workers.dev/v1/health
 curl -s -A 'Mozilla/5.0' -X POST https://aziel-runtime.vibelock.workers.dev/p/staticclock/advise \
-  -H 'content-type: application/json' -d '{"geo":"Indiana"}'
+  -H 'content-type: application/json' -d '{"geo":"United States"}'
 ```
 
 ## TemporalLock toolkit (0.2.0)
