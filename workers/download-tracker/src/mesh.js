@@ -40,8 +40,11 @@ export const MESH_LEAVE_PATH = "/v1/mesh/leave";
 export const MESH_BROADCAST_PATH = "/v1/mesh/broadcast";
 export const ANON_BROADCAST = "https://github.com/AzielEliab/anon-broadcast";
 
+export const REMAIN_OFF_1 = "GET /v1/mesh never enables; empty POST returns MESH-NEED-BEARER.";
+export const CAP7 = "names-only";
+export const CAP7_NAMES = Object.freeze(["mesh_node_live", "alt_internet", "packet_path"]);
 export const MESH_NOTE =
-  "QNM-BUILD-1.0. Suite mesh default off. Live|locked|isolated counts only. No Node Gate. No auto-heal. Not an anonymity network. Author: Aziel Eliab only.\nQNS-CD-1.0 companion to QNM-BUILD-1.0.";
+  "QNM-BUILD-1.0. Suite mesh default off. Live|locked|isolated counts only. No Node Gate. No auto-heal. Not an anonymity network. Author: Aziel Eliab only.\nQNS-CD-1.0 companion to QNM-BUILD-1.0. Remain-OFF #1: GET /v1/mesh never enables. Empty POST returns MESH-NEED-BEARER. Cap-7 names only. This proxy does not stamp azchat and does not claim radio PHY LIVE.";
 
 export const MESH_OPS = Object.freeze([
   "status",
@@ -258,6 +261,13 @@ export function publicMesh(mesh) {
     author: MESH_IDENTITY,
     identity: MESH_IDENTITY,
     door: MESH_PATH,
+    remain_off: 1,
+    get_never_enables: true,
+    cap7: CAP7,
+    cap7_names: CAP7_NAMES.slice(),
+    cap7_live: false,
+    azchat_stamped_here: false,
+    radio_phy_claimed_here: false,
     status_path: MESH_STATUS_PATH,
     nodes_path: MESH_NODES_PATH,
     join: MESH_JOIN_PATH,
@@ -312,7 +322,13 @@ export function meshPointer() {
     catalog_mcp: FRAGGATE_MCP,
     fraggate_slug: MESH_SLUG,
     origin: RUNTIME + MESH_PATH,
-    note: "PROXY to aziel-runtime /v1/mesh/* via AZIEL_RUNTIME. Not a local op. Not AnonBroadcast. Not AZMail's product-local ring. AZBot remains a skill, not a foundation model. Full node process is local qnm-node/. " + MESH_NOTE,
+    remain_off: 1,
+    get_never_enables: true,
+    cap7: CAP7,
+    cap7_live: false,
+    azchat_stamped_here: false,
+    radio_phy_claimed_here: false,
+    note: "PROXY to aziel-runtime /v1/mesh/* via AZIEL_RUNTIME. Not a local op. Not AnonBroadcast. Not AZMail's product-local ring. AZBot remains a skill, not a foundation model. Local runner binds 127.0.0.1. Remain-OFF #1: " + REMAIN_OFF_1 + " Cap-7 names only. This repo does not stamp azchat and does not flip Cap-7 live. Full node process is local qnm-node/. " + MESH_NOTE,
     anon_broadcast: ANON_BROADCAST,
     anon_broadcast_publish_path: false,
   };
@@ -386,6 +402,71 @@ export function stampQnsCd(data) {
   };
 }
 
+export function requestHasBearer(request, body) {
+  let header = "";
+  if (request && request.headers && typeof request.headers.get === "function") {
+    header = request.headers.get("Authorization") || request.headers.get("X-Aziel-Runtime-Token") || "";
+  }
+  if (String(header).trim()) return true;
+  if (body && typeof body === "object" && !Array.isArray(body)) {
+    const token = body.bearer || body.token || body.mesh_bearer;
+    if (String(token || "").trim()) return true;
+  }
+  return false;
+}
+
+/** Empty POST does not enable. Does not call origin. */
+export function meshNeedBearer(extra = {}) {
+  return {
+    ok: false,
+    code: "MESH-NEED-BEARER",
+    enabled: false,
+    radios: "off",
+    default_off: true,
+    remain_off: 1,
+    get_never_enables: true,
+    cap7: CAP7,
+    cap7_names: CAP7_NAMES.slice(),
+    cap7_live: false,
+    azchat_stamped_here: false,
+    radio_phy_claimed_here: false,
+    qnm_override_applied_here: false,
+    node_gate: false,
+    auto_heal: false,
+    anonymity_network: false,
+    author: IDENTITY,
+    identity: IDENTITY,
+    spec: QNM_SPEC,
+    qns_cd_spec: QNS_CD_SPEC,
+    qns_cd: QNS_CD,
+    message: "Empty POST does not enable. Operator bearer required. Remain-OFF #1.",
+    ...(extra || {}),
+  };
+}
+
+/**
+ * Honesty stamp on a proxied mesh document.
+ * Does not clear an upstream `enabled` value and does not set Cap-7 live.
+ */
+export function stampRemainOff(data) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return data;
+  const out = {
+    ...data,
+    remain_off: 1,
+    get_never_enables: true,
+    cap7: data.cap7 === "names-only" || data.cap7 == null ? CAP7 : data.cap7,
+    azbot_cap7: CAP7,
+    azbot_cap7_live: false,
+    azchat_stamped_here: false,
+    radio_phy_claimed_here: false,
+    qnm_override_applied_here: false,
+  };
+  if (!Object.prototype.hasOwnProperty.call(data, "cap7_names")) out.cap7_names = CAP7_NAMES.slice();
+  if (!Object.prototype.hasOwnProperty.call(data, "cap7_live")) out.cap7_live = false;
+  if (!Object.prototype.hasOwnProperty.call(data, "radio_phy_live")) out.radio_phy_live = false;
+  return out;
+}
+
 function meshErrFields({ message, door_url, http_status, content_type, via, extra }) {
   return {
     ok: false,
@@ -408,6 +489,12 @@ function meshErrFields({ message, door_url, http_status, content_type, via, extr
     ...(extra || {}),
     qns_cd_spec: QNS_CD_SPEC,
     qns_cd: QNS_CD,
+    remain_off: 1,
+    get_never_enables: true,
+    cap7: CAP7,
+    cap7_live: false,
+    azchat_stamped_here: false,
+    radio_phy_claimed_here: false,
   };
 }
 
@@ -461,6 +548,28 @@ export async function runMeshProxy(env, request, pathAndQuery) {
     };
   }
   const method = String((request && request.method) || "GET").toUpperCase();
+  let body;
+  if (method === "POST" && (pathOnly === MESH_PATH || pathOnly === MESH_ENABLE_PATH)) {
+    try {
+      body = await request.json();
+    } catch {
+      body = {};
+    }
+    if (!requestHasBearer(request, body)) {
+      return { status: 400, data: meshNeedBearer({ path: pathOnly }) };
+    }
+    if (pathOnly === MESH_PATH) {
+      return {
+        status: 400,
+        data: meshNeedBearer({
+          path: pathOnly,
+          code: "MESH-ROOT-NO-ENABLE",
+          enabled: false,
+          message: "POST /v1/mesh does not enable. Remain-OFF #1. Operator enable stays POST /v1/mesh/enable and is proxied only when a bearer is present.",
+        }),
+      };
+    }
+  }
   if (!allowed.includes(method)) {
     return {
       status: 405,
@@ -483,8 +592,7 @@ export async function runMeshProxy(env, request, pathAndQuery) {
   }
   const path = pathOnly + search;
 
-  let body;
-  if (method === "POST") {
+  if (method === "POST" && body === undefined) {
     try {
       body = await request.json();
     } catch {
@@ -572,5 +680,5 @@ export async function runMeshProxy(env, request, pathAndQuery) {
       }),
     };
   }
-  return { status: res.status, data: stampQnsCd(data) };
+  return { status: res.status, data: stampRemainOff(stampQnsCd(data)) };
 }

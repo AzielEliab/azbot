@@ -7,7 +7,7 @@ GET `/download` increments downloads and serves the gzip (HTTP 200, no 302).
 GET `/count` returns `{project, views, downloads, total}`.
 GET `/v1/skill` returns skill markdown. Does not increment.
 GET `/v1/fraggate/list`, GET `/v1/fraggate/describe`, POST `/v1/fraggate/call` PROXY to aziel-runtime via the `AZIEL_RUNTIME` service binding. Not local ops.
-`/v1/mesh/*` PROXY to aziel-runtime suite mesh (`AZIEL_RUNTIME`). Default OFF. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Human UI Live Nodes strip polls `GET /v1/mesh`.
+`/v1/mesh/*` PROXY to aziel-runtime suite mesh (`AZIEL_RUNTIME`). Default OFF. Remain-OFF #1: `GET /v1/mesh` never enables; an empty POST returns `MESH-NEED-BEARER`. QNM-BUILD-1.0 live|locked|isolated. No Node Gate. No auto-heal. Not anonymity. Cap-7 names only. This repo does not stamp azchat and does not flip Cap-7 live. Human UI Live Nodes strip polls `GET /v1/mesh`.
 GET `/mcp` returns dual-surface MCP pointer (catalog MCP + FragGate `slug=mesh`). Not a second MCP. Does not increment.
 
 ## QNS-CD-1.0

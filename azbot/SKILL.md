@@ -15,7 +15,7 @@ AZBot is a **skill**. It is not a new foundation model, not a kernel, not a VPN,
 
 **THIS IS:** a skill that tethers assistants to Aziel Eliab public front doors and the aziel-runtime 1.4.0 engine-runtime catalog.
 
-**THIS IS NOT:** a foundation model, Grok weights, a kernel, a VPN, a paid-key proxy, or Jeeves-as-sovereign. Hosted `/v1` does not increment downloads or views. This Worker `/v1/fraggate/*` and `/v1/mesh/*` PROXY to aziel-runtime via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion (cite/proxy only; not a new product). No Node Gate. No auto-heal. Not anonymity.
+**THIS IS NOT:** a foundation model, Grok weights, a kernel, a VPN, a paid-key proxy, or Jeeves-as-sovereign. Hosted `/v1` does not increment downloads or views. This Worker `/v1/fraggate/*` and `/v1/mesh/*` PROXY to aziel-runtime via AZIEL_RUNTIME. Suite mesh default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion (cite/proxy only; not a new product). No Node Gate. No auto-heal. Not anonymity. Local runner binds `127.0.0.1`. Remain-OFF #1: `GET /v1/mesh` never enables; empty POST returns `MESH-NEED-BEARER`. Cap-7 names (`mesh_node_live`, `alt_internet`, `packet_path`) are names only — not public ICANN, not radio PHY LIVE. This repo does not stamp azchat mesh and does not flip Cap-7 live.
 
 Always send `User-Agent: Mozilla/5.0`. Cloudflare Workers may 403 empty agents.
 
@@ -305,6 +305,8 @@ This skill. Local runner for custom and Cursor `SKILL.md` files. Author Aziel El
 **THIS IS:** a skill plus local runner. Hosted `/v1/skill` returns markdown.
 
 **THIS IS NOT:** a foundation model, Grok weights, a kernel, a VPN, or a paid-key proxy.
+
+**Design 1.0:** node collaborative forensic handoff. Local runner binds `127.0.0.1`. The closed-verb list is checked here. Five ethics gates stay on AZ-OS. AZBot packages `slug + op + payload` for FragGate (one door). The receipt appends to a local TemporalLock/ChainLock lattice. Other parties read the tip. They cannot rewrite it. Remain-OFF #1: `GET /v1/mesh` never enables; empty POST returns `MESH-NEED-BEARER`. Operator mesh presence needs that bearer and a local qnm-node. Public radios stay off. Cap-7 names (`mesh_node_live`, `alt_internet`, `packet_path`) are names only — not public ICANN, not radio PHY LIVE. QNM live OVERRIDE is not applied by this GET. This repo does not stamp azchat mesh and does not flip Cap-7 live. Vault wipe/scorch/unlock stay local-only / `FG-STUB`. Deanonymize, invent_mark, backdate, and public rollback stay refused. Live advisory Softwares stay unchanged. Design: `docs/designs/AZBot-Node-Collaborative-Forensic-Design-1.0.md`.
 
 - Host: https://azbot-download-tracker.vibelock.workers.dev
 - Skill: `GET https://azbot-download-tracker.vibelock.workers.dev/v1/skill`
@@ -800,7 +802,7 @@ curl -s -A 'Mozilla/5.0' https://aziel-runtime.vibelock.workers.dev/p/zsolver/pa
 
 ## Catalog + local UI
 
-Author: **Aziel Eliab**. Honest scope: Skill, not a foundation model. Hosted `/v1/skill` returns markdown. Jeeves is not sovereign. Front-door tether to godlock.uk, azielcorpuslibrary.net, and aziel-runtime — metadata scrape OK; never backdoor.
+Author: **Aziel Eliab**. Honest scope: Skill, not a foundation model. Hosted `/v1/skill` returns markdown. Jeeves is not sovereign. Local runner binds `127.0.0.1`. Remain-OFF #1: `GET /v1/mesh` never enables; empty POST returns `MESH-NEED-BEARER`. Cap-7 names only (`mesh_node_live`, `alt_internet`, `packet_path`) — not public ICANN, not radio PHY LIVE. This repo does not stamp azchat mesh and does not flip Cap-7 live. Front-door tether to godlock.uk, azielcorpuslibrary.net, and aziel-runtime — metadata scrape OK; never backdoor. Design 1.0: `docs/designs/AZBot-Node-Collaborative-Forensic-Design-1.0.md`.
 
 - Catalog product: https://aziel-runtime.vibelock.workers.dev/p/azbot/
 - Catalog OpenAPI: https://aziel-runtime.vibelock.workers.dev/openapi.json

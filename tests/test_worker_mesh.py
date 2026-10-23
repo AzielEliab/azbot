@@ -39,6 +39,13 @@ def test_mesh_contract_default_off_qnm_law() -> None:
     assert "Aziel Eliab" in MESH
     assert "export async function runMeshProxy" in MESH
     assert "AZIEL_RUNTIME" in MESH
+    assert "REMAIN_OFF_1" in MESH
+    assert "MESH-NEED-BEARER" in MESH
+    assert "export function meshNeedBearer" in MESH
+    assert "export function stampRemainOff" in MESH
+    assert "cap7_live: false" in MESH
+    assert "azchat_stamped_here: false" in MESH
+    assert "radio_phy_claimed_here: false" in MESH
 
 
 def test_mesh_pointer_and_openapi_helpers() -> None:

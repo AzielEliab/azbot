@@ -10,7 +10,7 @@ import { isMeshPath, meshOpenApiPaths, meshPointer, runMeshProxy } from "./mesh.
 const EXAMPLE_PAYLOAD = {};
 
 const LIMITATION =
-  "AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime.";
+  "AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime. Local runner binds 127.0.0.1. Remain-OFF #1: GET /v1/mesh never enables; empty POST returns MESH-NEED-BEARER. Cap-7 names only (mesh_node_live, alt_internet, packet_path) — not public ICANN, not radio PHY LIVE.";
 const CATALOG = "https://aziel-runtime.vibelock.workers.dev";
 const HOST = "https://azbot-download-tracker.vibelock.workers.dev";
 
@@ -148,7 +148,7 @@ export async function handleRuntimeApi(request, url, env) {
       limitation: LIMITATION,
       catalog: CATALOG,
       mesh: meshPointer(),
-      note: "Suite mesh /v1/mesh/* PROXY to aziel-runtime. Default OFF. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion to QNM-BUILD-1.0. No Node Gate. No auto-heal.",
+      note: "Suite mesh /v1/mesh/* PROXY to aziel-runtime. Default OFF. Remain-OFF #1: GET /v1/mesh never enables; empty POST returns MESH-NEED-BEARER. QNM-BUILD-1.0 live|locked|isolated. QNS-CD-1.0 companion to QNM-BUILD-1.0. No Node Gate. No auto-heal. Cap-7 names only. This repo does not stamp azchat and does not flip Cap-7 live.",
     });
   }
   if ((path === "/v1/example" || path === "/v1/example/") && (request.method === "GET" || request.method === "HEAD")) {

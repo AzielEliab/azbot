@@ -69,7 +69,19 @@ Counted download: https://azbot-download-tracker.vibelock.workers.dev/
 Direct tarball: https://azbot-download-tracker.vibelock.workers.dev/download?asset=azbot-0.2.0.tar.gz  
 GitHub: https://github.com/AzielEliab/azbot
 
-Suite mesh on the download Worker is a proxy. `GET /v1/mesh` forwards to aziel-runtime via `AZIEL_RUNTIME`. QNM-BUILD-1.0 reports live, locked, and isolated. QNS-CD-1.0 is a cross-map to [qnm-node](https://github.com/AzielEliab/qnm-node) and the [aziel-runtime design](https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md). `GET /v1/mesh` does not turn the mesh on. The mesh proxy has no Node Gate, does not auto-heal, and is not an anonymity network. Local qnsd stays on `127.0.0.1`.
+Suite mesh on the download Worker is a proxy. `GET /v1/mesh` forwards to aziel-runtime via `AZIEL_RUNTIME`. QNM-BUILD-1.0 reports live, locked, and isolated. QNS-CD-1.0 is a cross-map to [qnm-node](https://github.com/AzielEliab/qnm-node) and the [aziel-runtime design](https://github.com/AzielEliab/aziel-runtime/blob/main/docs/designs/QNS-CD-1.0.md). Remain-OFF #1: `GET /v1/mesh` never enables; an empty POST returns `MESH-NEED-BEARER`. That GET is not cancelled by a QNM live OVERRIDE elsewhere. The mesh proxy has no Node Gate, does not auto-heal, and is not an anonymity network. Local qnsd stays on `127.0.0.1`. Cap-7 names (`mesh_node_live`, `alt_internet`, `packet_path`) are names only in this repo — not public ICANN, not radio PHY LIVE. This repo does not stamp azchat mesh.
+
+Design 1.0 (local handoff, tip share, no rewrite): [docs/designs/AZBot-Node-Collaborative-Forensic-Design-1.0.md](docs/designs/AZBot-Node-Collaborative-Forensic-Design-1.0.md).
+
+```bash
+azbot mesh          # GET never enables
+azbot mesh post     # empty POST → MESH-NEED-BEARER
+azbot session open --party human-a --party human-b
+azbot session handoff --slug azclce --op score --payload '{}'
+azbot session tip
+```
+
+`azbot session handoff --call` posts one FragGate call. Without `--call` the package is recorded and the engine is not claimed.
 
 AZBot is the skill and the local runner. The engines run on aziel-runtime. This package does not host those engines, and it is not an upload proxy. Network origin of a later post is still the channel you use. Hosted `/v1/skill` returns skill markdown. `/v1` does not increment downloads.
 

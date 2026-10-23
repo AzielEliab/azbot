@@ -126,14 +126,48 @@ test("GET /v1/mesh/status returns MESH-OK enabled:false", async () => {
 });
 
 test("GET /v1/mesh never enables", async () => {
+  seen.length = 0;
   const bindings = env();
   const res = await fetchPath(bindings, "/v1/mesh");
   const data = JSON.parse(await res.text());
   assert.equal(data.enabled, false);
   assert.equal(data.code, "MESH-OK");
+  assert.equal(data.remain_off, 1);
+  assert.equal(data.get_never_enables, true);
+  assert.equal(data.azbot_cap7, "names-only");
+  assert.equal(data.azbot_cap7_live, false);
+  assert.equal(data.azchat_stamped_here, false);
+  assert.equal(data.radio_phy_claimed_here, false);
   assert.equal(data.qns_cd_spec, "QNS-CD-1.0");
   assert.equal(data.qns_cd.spec, "QNS-CD-1.0");
   assert.equal(data.qns_cd.local_qnsd, "https://github.com/AzielEliab/qnm-node");
+  assert.equal(seen.some((s) => s.method === "POST"), false);
+});
+
+test("POST /v1/mesh empty body is MESH-NEED-BEARER and does not enable", async () => {
+  seen.length = 0;
+  const bindings = env();
+  const res = await fetchPath(bindings, "/v1/mesh", "POST", {});
+  assert.equal(res.status, 400);
+  const data = JSON.parse(await res.text());
+  assert.equal(data.code, "MESH-NEED-BEARER");
+  assert.equal(data.enabled, false);
+  assert.equal(data.remain_off, 1);
+  assert.equal(data.cap7_live, false);
+  assert.equal(seen.some((s) => s.path === "/v1/mesh/enable"), false);
+});
+
+test("POST /v1/mesh/enable with bearer is proxied and not a local radio claim", async () => {
+  seen.length = 0;
+  const bindings = env();
+  const res = await fetchPath(bindings, "/v1/mesh/enable", "POST", { bearer: "operator-bearer" });
+  const data = JSON.parse(await res.text());
+  assert.equal(data.code, "MESH-OK");
+  assert.equal(data.azbot_cap7_live, false);
+  assert.equal(data.azchat_stamped_here, false);
+  assert.equal(data.radio_phy_claimed_here, false);
+  assert.equal(data.qnm_override_applied_here, false);
+  assert.ok(seen.some((s) => s.method === "POST" && s.path === "/v1/mesh/enable"));
 });
 
 test("POST /v1/mesh/enable without bearer stays OFF", async () => {
@@ -165,7 +199,10 @@ test("GET /v1/mesh/status does not increment views", async () => {
   const bindings = env();
   await fetchPath(bindings, "/v1/mesh/status");
   const count = JSON.parse(await (await fetchPath(bindings, "/count")).text());
-  assert.deepEqual(count, { project: "azbot", views: 0, downloads: 0, total: 0 });
+  assert.equal(count.project, "azbot");
+  assert.equal(count.views, 0);
+  assert.equal(count.downloads, 0);
+  assert.equal(count.total, 0);
 });
 
 test("homepage HTML has Live Nodes strip and no Node Gate", async () => {
@@ -178,6 +215,9 @@ test("homepage HTML has Live Nodes strip and no Node Gate", async () => {
   assert.match(html, /QNS-CD-1.0/);
   assert.match(html, /id="qnsCdLine"/);
   assert.match(html, /No Node Gate/);
+  assert.match(html, /Remain-OFF #1/);
+  assert.match(html, /127\.0\.0\.1/);
+  assert.match(html, /not a foundation model/);
   assert.doesNotMatch(html, /id="node-gate"/);
 });
 

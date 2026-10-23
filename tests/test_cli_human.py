@@ -92,7 +92,16 @@ def test_doctor_json_keeps_the_report_shape(monkeypatch, capsys) -> None:
         "limitation",
         "version",
         "skills",
+        "locks",
     }
+    assert data["locks"]["remain_off_1"] is True
+    assert data["locks"]["empty_post"] == "MESH-NEED-BEARER"
+    assert data["locks"]["empty_post_enables"] is False
+    assert data["locks"]["tip_rewrite"] is False
+    assert data["locks"]["tip_unchanged"] is True
+    assert data["locks"]["cap7"] == "names-only"
+    assert data["locks"]["cap7_live"] is False
+    assert data["locks"]["bind"] == "127.0.0.1"
     assert data["ok"] is True
     assert data["catalog_health_status"] == 200
     assert data["limitation"] == LIMITATION
