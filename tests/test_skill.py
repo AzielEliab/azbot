@@ -110,7 +110,23 @@ def test_skill_sources_stay_in_sync() -> None:
 def test_limitation() -> None:
     low = LIMITATION.lower()
     assert "skill" in low and "model" in low
+    assert "127.0.0.1" in LIMITATION
+    assert "Remain-OFF #1" in LIMITATION
+    assert "MESH-NEED-BEARER" in LIMITATION
+    assert "names only" in low
+    assert "mesh_node_live" in LIMITATION
     assert OPENAPI.endswith("/openapi.json")
+
+
+def test_skill_states_design_locks() -> None:
+    text = skill_text()
+    assert "127.0.0.1" in text
+    assert "Remain-OFF #1" in text
+    assert "MESH-NEED-BEARER" in text
+    assert "Cap-7" in text
+    assert "does not stamp azchat" in text
+    assert "not radio PHY LIVE" in text
+    assert "docs/designs/AZBot-Node-Collaborative-Forensic-Design-1.0.md" in text
 
 
 def test_cli_skill(capsys) -> None:

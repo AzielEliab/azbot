@@ -422,10 +422,10 @@ async function indexHtml(env) {
   <div class="brandrow"><img class="brandmark" src="/sigil.png" width="40" height="40" alt="" decoding="async"></div>
   <h1>AZBot</h1>
   <p class="motto">A skill for ChatGPT, Grok, Venice, Claude, Cursor, Glama, Perplexity, Copilot, Gemini, Mistral, Meta AI, Apple Intelligence, Amazon Q, DuckAssist, You.com, Cohere, and other MCP/OpenAPI clients. Not a model. Jeeves is not sovereign. Author Aziel Eliab.</p>
-  <p class="banner">AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime. Author: Aziel Eliab.</p>
+  <p class="banner">AZBot is a skill, not a foundation model, not a kernel, not a VPN, and not a paid-key proxy. Jeeves is not sovereign. Call aziel-runtime. Local runner binds 127.0.0.1. Remain-OFF #1: GET /v1/mesh never enables. Cap-7 names only. Author: Aziel Eliab.</p>
   <div id="meshStrip" aria-label="Suite Live Nodes">
     <div class="live"><b id="meshLiveCount">0</b> Live Nodes</div>
-    <div id="meshLine">Suite mesh: off (default). QNM-BUILD-1.0. Not an anonymity network.</div>
+    <div id="meshLine">Suite mesh: off (default). QNM-BUILD-1.0. Remain-OFF #1: GET /v1/mesh never enables. Not an anonymity network.</div>
     <div id="qnsCdLine">QNS-CD-1.0 companion to QNM-BUILD-1.0 · cites/proxies only · local qnsd not hosted</div>
     <div class="rollup">live <b id="qnmLive">0</b> · locked <b id="qnmLocked">0</b> · isolated <b id="qnmIsolated">0</b></div>
     <div>No Node Gate · No auto-heal · Aziel Eliab only</div>
@@ -510,7 +510,7 @@ async function indexHtml(env) {
           var line = $("meshLine");
           if (on) line.textContent = "Suite mesh: on · live " + live + " · locked " + locked + " · isolated " + isolated + ". Not an anonymity network.";
           else if (j.status === "unavailable" || (j.ok === false && j.error)) line.textContent = "Suite mesh: off (unavailable). QNM-BUILD-1.0. Not an anonymity network.";
-          else line.textContent = "Suite mesh: off (default). QNM-BUILD-1.0. Not an anonymity network.";
+          else line.textContent = "Suite mesh: off (default). QNM-BUILD-1.0. Remain-OFF #1: GET /v1/mesh never enables. Not an anonymity network.";
           var products = j.products_present || j.products || [];
           var names = Array.isArray(products) ? products.map(function (p) { return typeof p === "string" ? p : (p && (p.product || p.slug)) || ""; }).filter(Boolean) : [];
           var nodes = Array.isArray(j.nodes) ? j.nodes : [];

@@ -13,4 +13,5 @@ standalone/out/
 standalone/work/
 .env
 standalone/.env
+.azbot/
 *.ark
